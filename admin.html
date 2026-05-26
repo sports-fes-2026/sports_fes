@@ -142,6 +142,9 @@
 
 <div class="toast" id="toast"></div>
 
+<!-- data.js を先に読み込む -->
+<script src="data.js"></script>
+
 <!-- Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
@@ -349,9 +352,5 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2000);
 }
 
-// ── LOAD SCHEDULE DATA FROM data.js ──
-// data.jsを別途読み込む必要があります
-</script>
-<script src="data.js"></script>
 </body>
 </html>

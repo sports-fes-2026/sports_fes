@@ -332,37 +332,116 @@
 <div class="page" id="page-map">
   <div class="map-container">
     <div class="map-svg-area">
-      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-        <rect width="400" height="300" fill="#1a2a1a"/>
-        <rect x="20" y="20" width="170" height="100" rx="6" fill="#2a3d2a" stroke="#4a6a4a" stroke-width="1.5"/>
-        <text x="105" y="118" text-anchor="middle" fill="#7aaa7a" font-size="10" font-family="Noto Sans JP">陸上競技場 / グラウンド</text>
-        <circle cx="105" cy="68" r="16" fill="none" stroke="#5a8a5a" stroke-width="1" stroke-dasharray="3,3"/>
-        <text x="105" y="72" text-anchor="middle" fill="#7aaa7a" font-size="8" font-family="Noto Sans JP">サッカー</text>
-        <rect x="210" y="20" width="80" height="55" rx="6" fill="#2a2a3d" stroke="#4a4a6a" stroke-width="1.5"/>
-        <text x="250" y="45" text-anchor="middle" fill="#8a8aaa" font-size="10" font-family="Noto Sans JP">第一体育館</text>
-        <text x="250" y="60" text-anchor="middle" fill="#6a6a9a" font-size="8" font-family="Noto Sans JP">バスケ・バドミントン</text>
-        <rect x="298" y="20" width="82" height="55" rx="6" fill="#2a2a3d" stroke="#4a4a6a" stroke-width="1.5"/>
-        <text x="339" y="45" text-anchor="middle" fill="#8a8aaa" font-size="10" font-family="Noto Sans JP">第二体育館</text>
-        <text x="339" y="60" text-anchor="middle" fill="#6a6a9a" font-size="8" font-family="Noto Sans JP">バレー</text>
-        <rect x="20" y="140" width="170" height="55" rx="6" fill="#2a1a1a" stroke="#6a3a3a" stroke-width="1.5"/>
-        <text x="105" y="165" text-anchor="middle" fill="#aa7a7a" font-size="10" font-family="Noto Sans JP">野球場</text>
-        <text x="105" y="180" text-anchor="middle" fill="#8a5a5a" font-size="8" font-family="Noto Sans JP">ソフトボール</text>
-        <rect x="210" y="85" width="170" height="45" rx="6" fill="#1a1a2a" stroke="#3a3a6a" stroke-width="1.5"/>
-        <text x="295" y="106" text-anchor="middle" fill="#6a6aaa" font-size="10" font-family="Noto Sans JP">テニスコート</text>
-        <text x="295" y="120" text-anchor="middle" fill="#4a4a8a" font-size="8" font-family="Noto Sans JP">ソフトテニス</text>
-        <rect x="20" y="215" width="170" height="55" rx="6" fill="#1a2a2a" stroke="#3a6a6a" stroke-width="1.5"/>
-        <text x="105" y="240" text-anchor="middle" fill="#5a9aaa" font-size="10" font-family="Noto Sans JP">大講義室</text>
-        <text x="105" y="255" text-anchor="middle" fill="#3a7a8a" font-size="8" font-family="Noto Sans JP">Eスポーツ</text>
-        <rect x="210" y="148" width="170" height="45" rx="6" fill="#3d2a1a" stroke="#8a5a2a" stroke-width="1.5"/>
-        <text x="295" y="169" text-anchor="middle" fill="#aa7a3a" font-size="10" font-family="Noto Sans JP">本部テント</text>
-        <text x="295" y="183" text-anchor="middle" fill="#8a5a2a" font-size="8" font-family="Noto Sans JP">救護・放送</text>
-        <circle cx="105" cy="68" r="4" fill="#e8192c"/>
-        <circle cx="250" cy="42" r="4" fill="#4a4aff"/>
-        <circle cx="339" cy="42" r="4" fill="#8a4aff"/>
-        <circle cx="105" cy="162" r="4" fill="#ff6a00"/>
-        <circle cx="295" cy="106" r="4" fill="#ffcc00"/>
-        <circle cx="105" cy="240" r="4" fill="#00ccff"/>
-        <circle cx="295" cy="169" r="4" fill="#aa7a3a"/>
+      <svg viewBox="0 0 500 380" xmlns="http://www.w3.org/2000/svg" font-family="Noto Sans JP, sans-serif">
+        <rect width="500" height="380" fill="#0e0e0e"/>
+        <polygon points="10,10 490,10 490,370 10,370" fill="#141414" stroke="#2a2a2a" stroke-width="1"/>
+
+        <!-- 道路 -->
+        <rect x="193" y="10" width="12" height="360" fill="#1a1a1a"/>
+        <rect x="10" y="193" width="480" height="12" fill="#1a1a1a"/>
+
+        <!-- 陸上競技場 -->
+        <ellipse cx="95" cy="90" rx="80" ry="52" fill="#1a2a1a" stroke="#3a5a3a" stroke-width="5" opacity="0.6"/>
+        <ellipse cx="95" cy="90" rx="80" ry="52" fill="none" stroke="#e8192c" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <ellipse cx="95" cy="90" rx="55" ry="32" fill="#1e2e1e" stroke="#2a3a2a" stroke-width="1"/>
+        <text x="95" y="86" text-anchor="middle" fill="#5a9a5a" font-size="9" font-weight="700">陸上競技場</text>
+        <text x="95" y="98" text-anchor="middle" fill="#e8192c" font-size="7">サッカー・リレー</text>
+        <circle cx="95" cy="90" r="4" fill="#e8192c"/>
+
+        <!-- 野球場 -->
+        <rect x="213" y="14" width="120" height="80" rx="4" fill="#1a2a1a" stroke="#3a5a3a" stroke-width="1.5"/>
+        <path d="M213,94 Q273,14 333,94" fill="#1e2e1e" stroke="#2a4a2a" stroke-width="1"/>
+        <text x="273" y="58" text-anchor="middle" fill="#5a9a5a" font-size="9" font-weight="700">野球場</text>
+        <text x="273" y="70" text-anchor="middle" fill="#ff6600" font-size="7">ソフトボール</text>
+        <circle cx="273" cy="58" r="4" fill="#ff6600"/>
+
+        <!-- 寄宿舎エリア -->
+        <rect x="14" y="152" width="50" height="22" rx="2" fill="#1a1a2a" stroke="#2a2a3a" stroke-width="1"/>
+        <text x="39" y="167" text-anchor="middle" fill="#444" font-size="6.5">寄宿舎西2</text>
+        <rect x="72" y="152" width="50" height="22" rx="2" fill="#1a1a2a" stroke="#2a2a3a" stroke-width="1"/>
+        <text x="97" y="167" text-anchor="middle" fill="#444" font-size="6.5">寄宿舎東2</text>
+        <rect x="14" y="179" width="65" height="28" rx="2" fill="#1a1a2a" stroke="#2a2a3a" stroke-width="1"/>
+        <text x="46" y="197" text-anchor="middle" fill="#444" font-size="6.5">寄宿舎管理棟</text>
+        <rect x="14" y="212" width="50" height="22" rx="2" fill="#1a1a2a" stroke="#2a2a3a" stroke-width="1"/>
+        <text x="39" y="227" text-anchor="middle" fill="#444" font-size="6.5">寄宿舎西1</text>
+        <rect x="72" y="212" width="50" height="22" rx="2" fill="#1a1a2a" stroke="#2a2a3a" stroke-width="1"/>
+        <text x="97" y="227" text-anchor="middle" fill="#444" font-size="6.5">寄宿舎東1</text>
+
+        <!-- テニスコート -->
+        <rect x="95" y="242" width="88" height="32" rx="2" fill="#1a1f1a" stroke="#3a5a3a" stroke-width="1.5"/>
+        <line x1="139" y1="242" x2="139" y2="274" stroke="#2a4a2a" stroke-width="0.8"/>
+        <text x="139" y="260" text-anchor="middle" fill="#4a7a4a" font-size="8" font-weight="700">テニスコート</text>
+        <text x="139" y="270" text-anchor="middle" fill="#ffcc00" font-size="7">ソフトテニス</text>
+        <circle cx="139" cy="258" r="3" fill="#ffcc00"/>
+        <rect x="95" y="279" width="88" height="28" rx="2" fill="#1a1f1a" stroke="#2a3a2a" stroke-width="1"/>
+        <text x="139" y="297" text-anchor="middle" fill="#3a5a3a" font-size="7">テニスコート</text>
+        <rect x="95" y="312" width="88" height="28" rx="2" fill="#1a1f1a" stroke="#2a3a2a" stroke-width="1"/>
+        <text x="139" y="330" text-anchor="middle" fill="#3a5a3a" font-size="7">テニスコート</text>
+
+        <!-- ハンドボールコート -->
+        <rect x="14" y="242" width="72" height="65" rx="2" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+        <text x="50" y="278" text-anchor="middle" fill="#444" font-size="7">ハンドボール</text>
+
+        <!-- 厚生会館 -->
+        <rect x="14" y="312" width="72" height="28" rx="2" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+        <text x="50" y="330" text-anchor="middle" fill="#555" font-size="7">厚生会館</text>
+
+        <!-- 武道場・課外活動施設 -->
+        <rect x="213" y="110" width="55" height="24" rx="2" fill="#2a1a1a" stroke="#3a2a2a" stroke-width="1"/>
+        <text x="240" y="126" text-anchor="middle" fill="#666" font-size="7">武道場</text>
+
+        <!-- 第1体育館 -->
+        <rect x="213" y="140" width="72" height="48" rx="3" fill="#1a1a2a" stroke="#cc44cc" stroke-width="2"/>
+        <text x="249" y="161" text-anchor="middle" fill="#cc88cc" font-size="9" font-weight="700">第１体育館</text>
+        <text x="249" y="173" text-anchor="middle" fill="#aa66aa" font-size="7">バスケ・バドミントン</text>
+        <circle cx="249" cy="161" r="3" fill="#cc44cc"/>
+
+        <!-- 第2体育館 -->
+        <rect x="213" y="195" width="72" height="44" rx="3" fill="#1a1a2a" stroke="#4444cc" stroke-width="2"/>
+        <text x="249" y="214" text-anchor="middle" fill="#8888cc" font-size="9" font-weight="700">第２体育館</text>
+        <text x="249" y="226" text-anchor="middle" fill="#6666aa" font-size="7">バレー・ドッジボール</text>
+        <circle cx="249" cy="214" r="3" fill="#4444cc"/>
+
+        <!-- 大講義室 -->
+        <rect x="213" y="247" width="85" height="32" rx="3" fill="#1a2a1a" stroke="#00cc44" stroke-width="1.5"/>
+        <text x="255" y="261" text-anchor="middle" fill="#88cc88" font-size="9" font-weight="700">大講義室棟</text>
+        <text x="255" y="272" text-anchor="middle" fill="#00cc44" font-size="7">Eスポーツ</text>
+        <circle cx="255" cy="261" r="3" fill="#00cc44"/>
+
+        <!-- 測量準備室・土木建築 -->
+        <rect x="213" y="284" width="85" height="22" rx="2" fill="#1a1a1a" stroke="#222" stroke-width="1"/>
+        <text x="255" y="299" text-anchor="middle" fill="#444" font-size="6.5">測量準備室</text>
+        <rect x="213" y="311" width="85" height="29" rx="2" fill="#1a1a1a" stroke="#222" stroke-width="1"/>
+        <text x="255" y="329" text-anchor="middle" fill="#444" font-size="6.5">土木・建築系棟</text>
+
+        <!-- 右エリア -->
+        <rect x="305" y="110" width="100" height="38" rx="2" fill="#1a1a2a" stroke="#2a2a4a" stroke-width="1.5"/>
+        <text x="355" y="127" text-anchor="middle" fill="#6666aa" font-size="7.5" font-weight="700">電気・電子・情報系棟</text>
+        <text x="355" y="140" text-anchor="middle" fill="#4a4a88" font-size="7">専攻科棟</text>
+
+        <rect x="355" y="155" width="80" height="32" rx="2" fill="#1a1a1a" stroke="#222" stroke-width="1"/>
+        <text x="395" y="175" text-anchor="middle" fill="#444" font-size="7">機械系棟</text>
+        <rect x="355" y="192" width="80" height="32" rx="2" fill="#1a1a1a" stroke="#222" stroke-width="1"/>
+        <text x="395" y="212" text-anchor="middle" fill="#444" font-size="7">物質・生物系棟</text>
+        <rect x="355" y="229" width="80" height="28" rx="2" fill="#1a1a1a" stroke="#222" stroke-width="1"/>
+        <text x="395" y="247" text-anchor="middle" fill="#444" font-size="7">研究室棟</text>
+        <rect x="355" y="262" width="60" height="28" rx="2" fill="#1a1a1a" stroke="#222" stroke-width="1"/>
+        <text x="385" y="280" text-anchor="middle" fill="#555" font-size="7">管理棟</text>
+        <rect x="420" y="229" width="65" height="61" rx="2" fill="#1a1a1a" stroke="#222" stroke-width="1"/>
+        <text x="452" y="257" text-anchor="middle" fill="#444" font-size="6.5">科学技術</text>
+        <text x="452" y="268" text-anchor="middle" fill="#444" font-size="6.5">教育棟</text>
+        <rect x="305" y="280" width="45" height="32" rx="2" fill="#1a1a1a" stroke="#222" stroke-width="1"/>
+        <text x="327" y="300" text-anchor="middle" fill="#555" font-size="7">図書館</text>
+        <rect x="355" y="295" width="60" height="38" rx="2" fill="#1a1a1a" stroke="#222" stroke-width="1"/>
+        <text x="385" y="318" text-anchor="middle" fill="#444" font-size="7">講義室棟</text>
+        <rect x="420" y="295" width="65" height="38" rx="2" fill="#1a1a1a" stroke="#222" stroke-width="1"/>
+        <text x="452" y="318" text-anchor="middle" fill="#444" font-size="6.5">教育・交流棟</text>
+
+        <!-- ゲート -->
+        <text x="488" y="205" text-anchor="end" fill="#e8192c" font-size="8" font-weight="700">東門→</text>
+        <text x="14" y="315" text-anchor="start" fill="#e8192c" font-size="8" font-weight="700">←西門</text>
+        <text x="250" y="373" text-anchor="middle" fill="#e8192c" font-size="8" font-weight="700">↓南門</text>
+        <text x="440" y="373" text-anchor="middle" fill="#e8192c" font-size="8" font-weight="700">正門→</text>
       </svg>
     </div>
     <div class="map-legend">
@@ -377,7 +456,6 @@
       </div>
     </div>
   </div>
-  <p style="font-size:11px;color:var(--muted);text-align:center">※ マップはサンプルです。実際の会場に合わせて編集してください</p>
 </div>
 
 <!-- WATCHLIST -->
