@@ -698,5 +698,57 @@ updateCountdown(); setInterval(updateCountdown,1000);
 updateWlBadge();
 renderHome();
 </script>
+
+<!-- Firebase リアルタイム連携 -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBKyq02jcUWoqgy_SXL4_TLGXEKQvXMuMw",
+  authDomain: "sports-fes-dc27c.firebaseapp.com",
+  databaseURL: "https://sports-fes-dc27c-default-rtdb.firebaseio.com",
+  projectId: "sports-fes-dc27c",
+  storageBucket: "sports-fes-dc27c.firebasestorage.app",
+  messagingSenderId: "649731204042",
+  appId: "1:649731204042:web:7f1acd9887339a47c3a533"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// スケジュールをFirebaseから自動更新
+onValue(ref(db, 'schedules'), snap => {
+  const fbData = snap.val() || {};
+  scheduleData.forEach(s => {
+    if (fbData[s.id]) {
+      if (fbData[s.id].status) s.status = fbData[s.id].status;
+      if (fbData[s.id].result !== undefined) s.result = fbData[s.id].result;
+    }
+  });
+  renderHome();
+  // スケジュールページが開いていたら再描画
+  if (document.getElementById('page-schedule').classList.contains('active')) renderSchedule();
+  if (document.getElementById('page-watchlist').classList.contains('active')) renderWatchlist();
+});
+
+// トーナメントをFirebaseから自動更新
+onValue(ref(db, 'tournaments'), snap => {
+  const fbData = snap.val() || {};
+  Object.keys(fbData).forEach(sport => {
+    if (!tournamentData[sport]) return;
+    Object.keys(fbData[sport]).forEach(ri => {
+      Object.keys(fbData[sport][ri]).forEach(mi => {
+        const m = tournamentData[sport].matches[ri]?.[mi];
+        if (!m) return;
+        const d = fbData[sport][ri][mi];
+        if (d.score0 !== undefined) m.teams[0].score = d.score0;
+        if (d.score1 !== undefined) m.teams[1].score = d.score1;
+      });
+    });
+  });
+  if (document.getElementById('page-tournament').classList.contains('active')) renderTournament();
+});
+</script>
 </body>
 </html>
