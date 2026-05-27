@@ -1,9 +1,4 @@
-// ============================================================
-// ★ data.js — 当日はここだけ編集すればOK！
-// ============================================================
-
 // 大会の日付（年, 月-1, 日, 時, 分, 秒）
-// 1日目: 6月11日 9:00
 const TARGET_DATE = new Date(2026, 5, 11, 9, 0, 0);
 
 // ============================================================
@@ -182,9 +177,63 @@ const eventData = [
 ];
 
 // ============================================================
-// 得点表示用（必要に応じて更新）
+// トーナメントデータ（バスケ試作版）
+// score: null=未定, 数字=得点
 // ============================================================
-const scoreData = [
-  // 例: { rank: 1, team: "3E", point: 0 },
-  // 当日、競技結果に応じて追記してください
-];
+const tournamentData = {
+  'バスケ': {
+    rounds: ['1回戦A', '1回戦B', '1回戦C', '準々決勝', '準決勝', '決勝'],
+    matches: [
+      // 0: 1回戦A（試合①〜③ 同時進行）
+      [
+        { teams: [{name:'1-4', score:null}, {name:'1-3', score:null}] },
+        { teams: [{name:'2C', score:null}, {name:'2E', score:null}] },
+        { teams: [{name:'4E', score:null}, {name:'5M', score:null}] },
+      ],
+      // 1: 1回戦B（試合④〜⑥ 同時進行）
+      [
+        { teams: [{name:'2M', score:null}, {name:'TBD', score:null}] },  // ①勝者 vs 2M
+        { teams: [{name:'1-2', score:null}, {name:'2B', score:null}] },
+        { teams: [{name:'5E', score:null}, {name:'TBD', score:null}] },  // ③勝者 vs 5E
+      ],
+      // 2: 1回戦C（試合⑦〜⑩ 同時進行）
+      [
+        { teams: [{name:'TBD', score:null}, {name:'TBD', score:null}] }, // ④⑤勝者
+        { teams: [{name:'1-1', score:null}, {name:'TBD', score:null}] }, // ⑥勝者 vs 1-1
+        { teams: [{name:'3M', score:null}, {name:'4M', score:null}] },
+        { teams: [{name:'4C', score:null}, {name:'3E', score:null}] },
+      ],
+      // 3: 準々決勝（試合⑪〜⑭ 同時進行）
+      [
+        { teams: [{name:'TBD', score:null}, {name:'TBD', score:null}] },
+        { teams: [{name:'TBD', score:null}, {name:'TBD', score:null}] },
+        { teams: [{name:'5B', score:null}, {name:'TBD', score:null}] },
+        { teams: [{name:'5C', score:null}, {name:'4B', score:null}] },
+      ],
+      // 4: 準決勝
+      [
+        { teams: [{name:'TBD', score:null}, {name:'TBD', score:null}] }, // ⑮ A側
+        { teams: [{name:'TBD', score:null}, {name:'TBD', score:null}] }, // ⑯ B側
+      ],
+      // 5: 決勝
+      [
+        { teams: [{name:'TBD', score:null}, {name:'TBD', score:null}] },
+      ],
+    ]
+  },
+  '女子バスケ': {
+    rounds: ['1回戦', '準決勝', '決勝'],
+    matches: [
+      [
+        { teams: [{name:'2年', score:null}, {name:'1年', score:null}] },
+      ],
+      [
+        { teams: [{name:'3年', score:null}, {name:'TBD', score:null}] }, // ①勝者 vs 3年
+      ],
+      [
+        { teams: [{name:'5年', score:null}, {name:'TBD', score:null}] }, // ②勝者 vs 5年 → 4年
+        { teams: [{name:'TBD', score:null}, {name:'4年', score:null}] },
+      ],
+    ]
+  }
+};
