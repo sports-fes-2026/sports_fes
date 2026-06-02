@@ -93,7 +93,7 @@
   }
   .hero-eyebrow::before,.hero-eyebrow::after{content:'';width:18px;height:1px;background:var(--red);opacity:0.5;}
   .hero-title{
-    font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:4px;
+    font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;
     line-height:1;margin-bottom:4px;color:var(--white);
   }
   .hero-sub{font-size:11px;color:var(--muted2);margin-bottom:20px;letter-spacing:1px;}
@@ -191,10 +191,10 @@
   /* ── TOURNAMENT ── */
   .tournament-wrap{overflow-x:auto;padding-bottom:12px;}
   .tournament{display:flex;align-items:stretch;min-width:max-content;padding:4px 0;}
-  .t-round{display:flex;flex-direction:column;min-width:108px;}
+  .t-round{display:flex;flex-direction:column;min-width:112px;}
   .t-round-label{
-    font-size:9px;color:var(--muted);letter-spacing:2px;text-align:center;
-    padding:4px 0 8px;border-bottom:1px solid var(--border2);
+    font-size:9px;color:var(--muted2);letter-spacing:2px;text-align:center;
+    padding:4px 0 8px;border-bottom:1px solid var(--border);
     font-weight:700;text-transform:uppercase;
   }
   .t-matches{display:flex;flex-direction:column;justify-content:space-around;flex:1;padding:4px 0;}
@@ -202,21 +202,23 @@
   .t-match-group::after{content:'';position:absolute;right:0;top:25%;height:50%;width:1px;background:var(--border);}
   .t-round:last-child .t-match-group::after{display:none;}
   .t-team{
-    background:var(--card);border:1px solid var(--border2);
-    border-radius:3px;padding:5px 8px;
+    background:#252525;border:1px solid #3a3a3a;
+    border-radius:4px;padding:6px 8px;
     margin:2px 10px 2px 4px;
     display:flex;align-items:center;justify-content:space-between;
-    min-height:28px;transition:border-color 0.15s,background 0.15s;position:relative;
+    min-height:30px;transition:border-color 0.15s,background 0.15s;position:relative;
   }
-  .t-team::after{content:'';position:absolute;right:-10px;top:50%;width:10px;height:1px;background:var(--border);}
+  .t-team::after{content:'';position:absolute;right:-10px;top:50%;width:10px;height:1px;background:#3a3a3a;}
   .t-round:last-child .t-team::after{display:none;}
-  .t-team.winner{border-color:var(--red);background:rgba(232,25,44,0.06);}
+  .t-team.winner{border-color:var(--red);background:rgba(232,25,44,0.12);}
   .t-team.winner .t-name{color:var(--white);font-weight:900;}
-  .t-team.tbd{opacity:0.2;}
-  .t-name{font-weight:700;flex:1;font-size:11px;color:var(--muted2);}
-  .t-score{font-family:'Bebas Neue',sans-serif;font-size:15px;color:var(--text);min-width:16px;text-align:right;}
+  .t-team.tbd{opacity:0.25;}
+  .t-name{font-weight:700;flex:1;font-size:11px;color:#cccccc;}
+  .t-score{font-family:'Bebas Neue',sans-serif;font-size:16px;color:#eeeeee;min-width:16px;text-align:right;}
   .t-score.lose{color:var(--muted);}
   .t-team.winner .t-score{color:var(--red);}
+  .t-team.my-class-team{border-color:#ffcc00;background:rgba(255,204,0,0.08);}
+  .t-team.my-class-team .t-name{color:#ffcc00;}
 
   /* ── MAP ── */
   .map-container{background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:12px;}
@@ -252,9 +254,73 @@
   }
   .modal-close:hover{opacity:0.85;}
 
+  /* ── SCHEDULE TIMELINE ── */
+  .day-tabs{display:flex;border-bottom:1px solid var(--border2);margin-bottom:0;}
+  .day-tab{flex:1;background:none;border:none;color:var(--muted);padding:12px;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;}
+  .day-tab.active{color:var(--white);border-bottom-color:var(--red);}
+
+  .status-tabs{display:flex;gap:6px;padding:12px 0 8px;overflow-x:auto;scrollbar-width:none;}
+  .status-tabs::-webkit-scrollbar{display:none;}
+  .status-tab{background:transparent;border:1px solid var(--border);color:var(--muted2);padding:5px 14px;border-radius:20px;cursor:pointer;font-size:11px;font-weight:700;font-family:'Noto Sans JP',sans-serif;white-space:nowrap;transition:all 0.15s;}
+  .status-tab.active{background:var(--red);border-color:var(--red);color:white;}
+
+  .sport-chip{background:transparent;border:1px solid var(--border);color:var(--muted2);padding:5px 12px;border-radius:3px;cursor:pointer;font-size:11px;white-space:nowrap;font-family:'Noto Sans JP',sans-serif;transition:all 0.15s;flex-shrink:0;font-weight:700;}
+  .sport-chip.active{background:var(--red);border-color:var(--red);color:white;}
+
+  .timeline{padding:8px 0 24px;}
+  .timeline-row{display:flex;gap:0;margin-bottom:20px;}
+  .timeline-left{display:flex;flex-direction:column;align-items:center;width:20px;flex-shrink:0;padding-top:2px;}
+  .timeline-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;border:2px solid var(--border);background:var(--dark);}
+  .timeline-dot.dot-live{background:var(--red);border-color:var(--red);box-shadow:0 0 6px var(--red);}
+  .timeline-dot.dot-done{background:var(--muted);border-color:var(--muted);}
+  .timeline-dot.dot-upcoming{background:var(--dark);border-color:var(--border);}
+  .timeline-line{flex:1;width:1px;background:var(--border2);margin-top:4px;}
+  .timeline-right{flex:1;padding-left:10px;}
+  .timeline-time{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--muted2);letter-spacing:1px;margin-bottom:8px;}
+
+  .match-cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .match-card{background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;cursor:pointer;transition:border-color 0.15s;}
+  .match-card.live{border-color:var(--red);background:rgba(232,25,44,0.05);}
+  .match-card.done{border-color:var(--border);background:var(--card);}
+  .match-card:active{transform:scale(0.98);}
+  .match-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+  .match-sport{font-size:10px;font-weight:700;color:var(--red);}
+  .match-place{font-size:9px;color:var(--muted);text-align:right;}
+  .match-no{font-size:9px;color:var(--muted);margin-bottom:4px;}
+  .match-teams{display:flex;flex-direction:column;gap:2px;margin-bottom:4px;}
+  .match-teams span{font-size:13px;font-weight:900;color:var(--text);}
+  .match-teams .vs{font-size:9px;color:var(--muted);font-weight:400;}
+  .team-win{color:var(--white)!important;}
+  .relay-teams{font-size:10px;color:var(--muted2);line-height:1.6;margin-bottom:4px;}
+  .match-score{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;margin-bottom:4px;}
+  .score-win{color:var(--white);}
+  .score-lose{color:var(--muted);}
+  .score-sep{color:var(--muted);margin:0 4px;font-size:14px;}
+  .match-card-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:4px;}
+  .match-status-label{font-size:9px;font-weight:700;letter-spacing:1px;color:transparent;}
+  .lbl-live{color:var(--red);}
+  .lbl-done{color:var(--muted);}
+  .watch-star{font-size:12px;opacity:0.25;transition:opacity 0.15s;}
+  .watch-star.on{opacity:1;}
+
   /* ── UTILS ── */
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
   .live-dot{display:inline-block;width:5px;height:5px;background:var(--red);border-radius:50%;animation:pulse 1s infinite;margin-right:5px;vertical-align:middle;}
+
+  /* ── SETTINGS ── */
+  .settings-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:14px;margin-bottom:12px;}
+  .settings-label{font-size:11px;color:var(--muted2);margin-bottom:10px;line-height:1.6;}
+  .class-select{width:100%;background:var(--dark);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:4px;font-size:14px;font-family:'Noto Sans JP',sans-serif;outline:none;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M0 0l6 8 6-8z' fill='%23555'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;}
+  .class-select:focus{border-color:var(--red);}
+  .ios-guide-btn{width:100%;background:var(--red);border:none;color:white;padding:11px;border-radius:4px;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif;cursor:pointer;letter-spacing:0.5px;transition:opacity 0.15s;}
+  .ios-guide-btn:hover{opacity:0.85;}
+  .guide-step{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border2);font-size:13px;}
+  .guide-step:last-of-type{border-bottom:none;}
+  .guide-num{background:var(--red);color:white;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+
+  /* ── MY CLASS HIGHLIGHT ── */
+  .match-card.my-class{border-color:var(--accent);background:rgba(255,204,0,0.04);}
+  .match-card.my-class .match-teams span{color:var(--accent);}
 </style>
 </head>
 <body>
@@ -311,13 +377,22 @@
 
 <!-- SCHEDULE -->
 <div class="page" id="page-schedule">
-  <div class="filter-row" id="day-filter-row">
-    <button class="filter-chip active" onclick="setDay(0)">全日程</button>
-    <button class="filter-chip" onclick="setDay(1)">1日目 (6/11)</button>
-    <button class="filter-chip" onclick="setDay(2)">2日目 (6/12)</button>
+  <!-- 日付タブ -->
+  <div id="day-tabs" class="day-tabs">
+    <button class="day-tab active" onclick="setDay(1)">1日目</button>
+    <button class="day-tab" onclick="setDay(2)">2日目</button>
   </div>
-  <div class="filter-row" id="filter-row"></div>
-  <div class="schedule-list" id="schedule-list"></div>
+  <!-- ステータスフィルター -->
+  <div id="status-tabs" class="status-tabs">
+    <button class="status-tab active" data-status="すべて" onclick="setStatusFilter('すべて')">すべて</button>
+    <button class="status-tab" data-status="upcoming" onclick="setStatusFilter('upcoming')">開催予定</button>
+    <button class="status-tab" data-status="live" onclick="setStatusFilter('live')">進行中</button>
+    <button class="status-tab" data-status="done" onclick="setStatusFilter('done')">結果</button>
+  </div>
+  <!-- スポーツフィルター -->
+  <div id="sport-filter" class="filter-row"></div>
+  <!-- タイムライン -->
+  <div id="timeline" class="timeline"></div>
 </div>
 
 <!-- TOURNAMENT -->
@@ -460,7 +535,49 @@
 
 <!-- WATCHLIST -->
 <div class="page" id="page-watchlist">
-  <div class="section-title">MY WATCHLIST</div>
+
+  <!-- 自クラス設定 -->
+  <div class="section-title">MY CLASS</div>
+  <div class="settings-card">
+    <div class="settings-label">自クラスを設定すると試合がハイライトされます</div>
+    <select id="my-class-select" class="class-select" onchange="setMyClass(this.value)">
+      <option value="">未選択</option>
+      <optgroup label="1年">
+        <option>1-1</option><option>1-2</option><option>1-3</option><option>1-4</option>
+      </optgroup>
+      <optgroup label="2年">
+        <option>2B</option><option>2C</option><option>2E</option><option>2M</option>
+      </optgroup>
+      <optgroup label="3年">
+        <option>3B</option><option>3C</option><option>3E</option><option>3M</option>
+      </optgroup>
+      <optgroup label="4年">
+        <option>4B</option><option>4C</option><option>4E</option><option>4M</option>
+      </optgroup>
+      <optgroup label="5年">
+        <option>5B</option><option>5C</option><option>5E</option><option>5M</option>
+      </optgroup>
+      <optgroup label="その他">
+        <option>専攻科</option><option>教職員</option>
+      </optgroup>
+    </select>
+  </div>
+
+  <!-- iPhoneホーム画面追加ガイド -->
+  <div class="section-title">iPhone向け</div>
+  <div class="settings-card" id="ios-guide-card">
+    <div class="settings-label">ホーム画面に追加すると通知が届きやすくなります</div>
+    <button class="ios-guide-btn" onclick="toggleIosGuide()">📱 ホーム画面への追加手順を見る</button>
+    <div id="ios-guide" style="display:none;">
+      <div class="guide-step"><span class="guide-num">1</span>下の共有ボタン（□に↑）をタップ</div>
+      <div class="guide-step"><span class="guide-num">2</span>「ホーム画面に追加」をタップ</div>
+      <div class="guide-step"><span class="guide-num">3</span>右上の「追加」をタップ</div>
+      <div style="font-size:10px;color:var(--muted);margin-top:10px;">※ Safariで開いている場合のみ有効です</div>
+    </div>
+  </div>
+
+  <!-- ウォッチリスト -->
+  <div class="section-title">WATCHLIST</div>
   <div id="watchlist-content"></div>
 </div>
 
@@ -630,8 +747,68 @@ const tournamentData = {
 
 // ============================================================
 let watchlist = JSON.parse(localStorage.getItem('wl')||'[]');
-let currentFilter='すべて', currentDay=0, currentSport=Object.keys(tournamentData)[0];
+let currentSportFilter='すべて', currentDay=1, currentStatusFilter='すべて';
+let currentSport=Object.keys(tournamentData)[0];
 const pageOrder=['home','schedule','tournament','map'];
+
+// ── 自クラス設定 ──
+let myClass = localStorage.getItem('myClass') || '';
+
+function setMyClass(val) {
+  myClass = val;
+  localStorage.setItem('myClass', val);
+  if (document.getElementById('page-schedule').classList.contains('active')) renderSchedule();
+}
+
+function toggleIosGuide() {
+  const g = document.getElementById('ios-guide');
+  g.style.display = g.style.display === 'none' ? 'block' : 'none';
+}
+
+function initMyClassSelect() {
+  const sel = document.getElementById('my-class-select');
+  if (sel && myClass) sel.value = myClass;
+}
+
+
+let notifiedIds = new Set();
+
+async function requestNotificationPermission() {
+  if (!('Notification' in window)) return false;
+  if (Notification.permission === 'granted') return true;
+  if (Notification.permission === 'denied') return false;
+  const result = await Notification.requestPermission();
+  return result === 'granted';
+}
+
+function checkNotifications() {
+  if (Notification.permission !== 'granted') return;
+  const now = new Date();
+  matchData.forEach(m => {
+    if (!watchlist.includes(m.id)) return;
+    if (notifiedIds.has(m.id)) return;
+    if (m.status === 'done') return;
+
+    // 試合の開始時刻を今日の日付で計算
+    const [h, min] = m.time.split(':').map(Number);
+    const matchDate = new Date();
+    matchDate.setHours(h, min, 0, 0);
+    const diff = matchDate - now;
+
+    // 5分前〜4分前の間に通知
+    if (diff > 0 && diff <= 5 * 60 * 1000) {
+      notifiedIds.add(m.id);
+      const team = m.team2 ? `${m.team1} vs ${m.team2}` : m.team1;
+      new Notification('⏰ まもなく試合開始！', {
+        body: `${m.sport} ${m.round}\n${team}\n${m.time}〜 ${m.venue}`,
+        icon: '/sports_fes/icon.png',
+      });
+    }
+  });
+}
+
+// 通知チェックを1分ごとに実行
+setInterval(checkNotifications, 60 * 1000);
 
 function goPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -659,42 +836,97 @@ function updateCountdown(){
   document.getElementById('cd-s').textContent=String(Math.floor(diff%60000/1000)).padStart(2,'0');
 }
 
+// ── スケジュール（タイムライン形式）──
 function renderSchedule(){
-  document.querySelectorAll('#day-filter-row .filter-chip').forEach((b,i)=>b.classList.toggle('active',i===currentDay));
-  const dayF=currentDay===0?scheduleData:scheduleData.filter(s=>s.day===currentDay);
-  const cats=['すべて',...new Set(dayF.map(s=>s.category))];
-  document.getElementById('filter-row').innerHTML=cats.map(c=>`<button class="filter-chip ${c===currentFilter?'active':''}" onclick="setFilter('${c}')">${c}</button>`).join('');
-  const filtered=currentFilter==='すべて'?dayF:dayF.filter(s=>s.category===currentFilter);
-  document.getElementById('schedule-list').innerHTML=filtered.map(s=>{
-    const iw=watchlist.includes(s.id);
-    const sc=s.status==='live'?'status-live':s.status==='done'?'status-done':'status-upcoming';
-    const sl=s.status==='live'?'● LIVE':s.status==='done'?'終了':'予定';
-    return `<div class="schedule-card ${iw?'watched':''} ${s.status==='live'?'live':''}">
-      <div class="schedule-time ${s.status==='live'?'live-time':''}">${s.time}</div>
-      <div class="schedule-info"><div class="schedule-event">${s.event}</div><div class="schedule-detail">📍 ${s.place}${s.result?' · '+s.result:''}</div></div>
-      <div class="schedule-right"><span class="status-badge ${sc}">${sl}</span><button class="watch-toggle ${iw?'on':''}" onclick="toggleWatch(${s.id})">⭐</button></div>
+  // 日付タブ
+  document.querySelectorAll('#day-tabs .day-tab').forEach((b,i)=>b.classList.toggle('active',i+1===currentDay));
+
+  // スポーツフィルター
+  let dayData = matchData.filter(m=>m.day===currentDay);
+  const sports=['すべて',...new Set(dayData.map(m=>m.sport))];
+  document.getElementById('sport-filter').innerHTML=sports.map(s=>{
+    const icon=sportIcons[s]||'';
+    return `<button class="sport-chip ${s===currentSportFilter?'active':''}" onclick="setSportFilter('${s}')">${icon} ${s}</button>`;
+  }).join('');
+
+  // ステータスフィルター
+  document.querySelectorAll('#status-tabs .status-tab').forEach(b=>b.classList.toggle('active',b.dataset.status===currentStatusFilter));
+
+  // フィルタリング
+  let filtered=dayData;
+  if(currentSportFilter!=='すべて') filtered=filtered.filter(m=>m.sport===currentSportFilter);
+  if(currentStatusFilter!=='すべて') filtered=filtered.filter(m=>m.status===currentStatusFilter);
+
+  // 時間でグループ化
+  const groups={};
+  filtered.forEach(m=>{
+    if(!groups[m.time]) groups[m.time]=[];
+    groups[m.time].push(m);
+  });
+
+  const times=Object.keys(groups).sort();
+  document.getElementById('timeline').innerHTML=times.map(time=>{
+    const matches=groups[time];
+    const hasLive=matches.some(m=>m.status==='live');
+    const hasDone=matches.some(m=>m.status==='done');
+    const dotClass=hasLive?'dot-live':hasDone?'dot-done':'dot-upcoming';
+    const cards=matches.map(m=>{
+      const icon=sportIcons[m.sport]||'';
+      const isWatched=watchlist.includes(m.id);
+      const statusLabel=m.status==='live'?'LIVE':m.status==='done'?'終了':'';
+      const isRelay=m.team2==='';
+      let scoreHtml='';
+      if(m.status==='done'&&m.score1!==null&&m.score2!==null&&!isRelay){
+        const w1=m.score1>m.score2, w2=m.score2>m.score1;
+        scoreHtml=`<div class="match-score"><span class="${w1?'score-win':'score-lose'}">${m.score1}</span><span class="score-sep">-</span><span class="${w2?'score-win':'score-lose'}">${m.score2}</span></div>`;
+      }
+      const matchContent=isRelay
+        ? `<div class="match-teams relay-teams">${m.team1}</div>`
+        : `<div class="match-teams"><span class="${m.status==='done'&&m.score1>m.score2?'team-win':''}">${m.team1||'—'}</span><span class="vs">vs</span><span class="${m.status==='done'&&m.score2>m.score1?'team-win':''}">${m.team2||'—'}</span></div>`;
+      const isMyClass = myClass && (m.team1===myClass || m.team2===myClass);
+      return `<div class="match-card ${m.status}${isMyClass?' my-class':''}" onclick="toggleWatch('${m.id}')">
+        <div class="match-card-top">
+          <span class="match-sport">${icon} ${m.sport}</span>
+          <span class="match-place">${m.venue}</span>
+        </div>
+        <div class="match-no">${m.round}</div>
+        ${matchContent}
+        ${scoreHtml}
+        <div class="match-card-bottom">
+          <span class="match-status-label ${m.status==='live'?'lbl-live':m.status==='done'?'lbl-done':''}">${statusLabel}</span>
+          <span class="watch-star ${isWatched?'on':''}">⭐</span>
+        </div>
+      </div>`;
+    }).join('');
+    return `<div class="timeline-row">
+      <div class="timeline-left">
+        <div class="timeline-dot ${dotClass}"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-right">
+        <div class="timeline-time">${time}</div>
+        <div class="match-cards-grid">${cards}</div>
+      </div>
     </div>`;
   }).join('');
 }
 
-function setDay(d){currentDay=d;currentFilter='すべて';renderSchedule();}
-function setFilter(c){currentFilter=c;renderSchedule();}
+function setDay(d){currentDay=d;currentSportFilter='すべて';currentStatusFilter='すべて';renderSchedule();}
+function setSportFilter(s){currentSportFilter=s;renderSchedule();}
+function setStatusFilter(s){currentStatusFilter=s;renderSchedule();}
+
 function toggleWatch(id){
   watchlist=watchlist.includes(id)?watchlist.filter(w=>w!==id):[...watchlist,id];
   localStorage.setItem('wl',JSON.stringify(watchlist));
   updateWlBadge();
-  renderSchedule();
+  if(document.getElementById('page-schedule').classList.contains('active')) renderSchedule();
 }
 
 function updateWlBadge(){
   const badge=document.getElementById('wl-badge');
   if(!badge) return;
-  if(watchlist.length>0){
-    badge.textContent=watchlist.length;
-    badge.style.display='flex';
-  } else {
-    badge.style.display='none';
-  }
+  if(watchlist.length>0){badge.textContent=watchlist.length;badge.style.display='flex';}
+  else badge.style.display='none';
 }
 
 function renderTournament(){
@@ -723,7 +955,8 @@ function renderTournament(){
         const other=match.teams[1-ti];
         const isWinner=team.score!==null&&other.score!==null&&team.score>other.score;
         const isLoser=team.score!==null&&other.score!==null&&team.score<other.score;
-        el.className=`t-team${isTbd?' tbd':''}${isWinner?' winner':''}`;
+        const isMyClassTeam = myClass && team.name === myClass;
+        el.className=`t-team${isTbd?' tbd':''}${isWinner?' winner':''}${isMyClassTeam?' my-class-team':''}`;
         const scoreHtml=team.score!==null?`<span class="t-score${isLoser?' lose':''}">${team.score}</span>`:'';
         el.innerHTML=`<span class="t-name">${isTbd?'—':team.name}</span>${scoreHtml}`;
         group.appendChild(el);
@@ -737,35 +970,40 @@ function renderTournament(){
 function selectSport(s){currentSport=s;renderTournament();}
 
 function renderWatchlist(){
-  const items=scheduleData.filter(s=>watchlist.includes(s.id));
+  const items=matchData.filter(m=>watchlist.includes(m.id));
   const el=document.getElementById('watchlist-content');
-  if(!items.length){el.innerHTML=`<div class="empty-state"><div class="empty-icon">⭐</div><div class="empty-text">スケジュールから⭐を押して<br>気になる競技を追加しよう</div></div>`;return;}
-  el.innerHTML=`<div class="schedule-list">${items.map(s=>{
-    const sc=s.status==='live'?'status-live':s.status==='done'?'status-done':'status-upcoming';
-    const sl=s.status==='live'?'● LIVE':s.status==='done'?'終了':'予定';
-    return `<div class="schedule-card watched ${s.status==='live'?'live':''}">
-      <div class="schedule-time">${s.time}</div>
-      <div class="schedule-info"><div class="schedule-event">${s.event}</div><div class="schedule-detail">📍 ${s.place}${s.result?' · '+s.result:''}</div></div>
-      <div class="schedule-right"><span class="status-badge ${sc}">${sl}</span><button class="watch-toggle on" onclick="removeWatch(${s.id})">⭐</button></div>
+  if(!items.length){el.innerHTML=`<div class="empty-state"><div class="empty-icon">⭐</div><div class="empty-text">試合カードをタップして<br>気になる試合を追加しよう</div></div>`;return;}
+  el.innerHTML=items.map(m=>{
+    const icon=sportIcons[m.sport]||'';
+    const isRelay=m.team2==='';
+    return `<div class="match-card ${m.status}" style="margin-bottom:8px">
+      <div class="match-card-top"><span class="match-sport">${icon} ${m.sport}</span><span class="match-place">${m.place}</span></div>
+      <div class="match-no">${m.matchNo}</div>
+      ${isRelay?`<div class="match-teams relay-teams">${m.team1}</div>`:`<div class="match-teams"><span>${m.team1||'—'}</span><span class="vs">vs</span><span>${m.team2||'—'}</span></div>`}
+      <div class="match-card-bottom"><span style="font-size:10px;color:var(--muted)">${m.time} · Day${m.day}</span><span class="watch-star on" onclick="removeWatch(${m.id})">⭐</span></div>
     </div>`;
-  }).join('')}</div>`;
+  }).join('');
 }
 function removeWatch(id){watchlist=watchlist.filter(w=>w!==id);localStorage.setItem('wl',JSON.stringify(watchlist));renderWatchlist();}
 
 function renderHome(){
-  const live=scheduleData.filter(s=>s.status==='live');
+  const live=matchData.filter(m=>m.status==='live');
   if(live.length){
-    document.getElementById('home-live-score').textContent=live[0].result||'進行中';
-    document.getElementById('home-live-teams').textContent=live[0].event;
-    document.getElementById('home-live-place').textContent=live[0].place;
+    const m=live[0]; const icon=sportIcons[m.sport]||'';
+    document.getElementById('home-live-score').textContent=m.score1!==null?`${m.score1} - ${m.score2}`:'進行中';
+    document.getElementById('home-live-teams').textContent=`${icon} ${m.team1} vs ${m.team2}`;
+    document.getElementById('home-live-place').textContent=m.place;
   }
-  const upcoming=scheduleData.filter(s=>s.status==='upcoming').slice(0,2);
-  document.getElementById('home-next').innerHTML=`<div class="schedule-list">${upcoming.map(s=>`
-    <div class="schedule-card">
-      <div class="schedule-time">${s.time}</div>
-      <div class="schedule-info"><div class="schedule-event">${s.event}</div><div class="schedule-detail">📍 ${s.place}</div></div>
-      <div class="schedule-right"><span class="status-badge status-upcoming">予定</span></div>
-    </div>`).join('')}</div>`;
+  const upcoming=matchData.filter(m=>m.status==='upcoming').slice(0,3);
+  document.getElementById('home-next').innerHTML=upcoming.map(m=>{
+    const icon=sportIcons[m.sport]||'';
+    const isRelay=m.team2==='';
+    return `<div class="match-card upcoming" style="margin-bottom:6px">
+      <div class="match-card-top"><span class="match-sport">${icon} ${m.sport}</span><span class="match-place">${m.place}</span></div>
+      ${isRelay?`<div class="match-teams relay-teams">${m.team1}</div>`:`<div class="match-teams"><span>${m.team1||'—'}</span><span class="vs">vs</span><span>${m.team2||'—'}</span></div>`}
+      <div style="font-size:10px;color:var(--muted);margin-top:4px">${m.time}</div>
+    </div>`;
+  }).join('');
 }
 
 function closeModal(e){if(e.target.classList.contains('modal-overlay'))closeModalBtn();}
@@ -775,6 +1013,8 @@ updateClock(); setInterval(updateClock,1000);
 updateCountdown(); setInterval(updateCountdown,1000);
 updateWlBadge();
 renderHome();
+requestNotificationPermission();
+initMyClassSelect();
 </script>
 
 <!-- Firebase リアルタイム連携 -->
@@ -795,17 +1035,19 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// スケジュールをFirebaseから自動更新
-onValue(ref(db, 'schedules'), snap => {
+// matchDataをFirebaseから自動更新
+onValue(ref(db, 'matches'), snap => {
   const fbData = snap.val() || {};
-  scheduleData.forEach(s => {
-    if (fbData[s.id]) {
-      if (fbData[s.id].status) s.status = fbData[s.id].status;
-      if (fbData[s.id].result !== undefined) s.result = fbData[s.id].result;
+  matchData.forEach(m => {
+    if (fbData[m.id]) {
+      if (fbData[m.id].status !== undefined) m.status = fbData[m.id].status;
+      if (fbData[m.id].score1 !== undefined) m.score1 = fbData[m.id].score1;
+      if (fbData[m.id].score2 !== undefined) m.score2 = fbData[m.id].score2;
+      if (fbData[m.id].team1 !== undefined) m.team1 = fbData[m.id].team1;
+      if (fbData[m.id].team2 !== undefined) m.team2 = fbData[m.id].team2;
     }
   });
   renderHome();
-  // スケジュールページが開いていたら再描画
   if (document.getElementById('page-schedule').classList.contains('active')) renderSchedule();
   if (document.getElementById('page-watchlist').classList.contains('active')) renderWatchlist();
 });

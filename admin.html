@@ -193,7 +193,7 @@ window.doLogout = function() {
 // ── FIREBASE ──
 function initFirebase() {
   // スケジュールの変更を監視
-  onValue(ref(db, 'schedules'), snap => {
+  onValue(ref(db, 'matches'), snap => {
     liveData.schedules = snap.val() || {};
     renderAdminSchedule();
   });
@@ -225,39 +225,56 @@ window.setAdminCat = function(c) {
   renderAdminSchedule();
 };
 
-function getScheduleData() {
-  return scheduleData.map(s => {
-    const fb = liveData.schedules[s.id] || {};
-    return { ...s, status: fb.status || s.status, result: fb.result || s.result };
+function getMatchData() {
+  return matchData.map(m => {
+    const fb = liveData.schedules[m.id] || {};
+    return {
+      ...m,
+      status: fb.status || m.status,
+      score1: fb.score1 !== undefined ? fb.score1 : m.score1,
+      score2: fb.score2 !== undefined ? fb.score2 : m.score2,
+      team1: fb.team1 || m.team1,
+      team2: fb.team2 || m.team2,
+    };
   });
 }
 
 function renderAdminSchedule() {
-  const data = getScheduleData();
-  const dayF = adminDay === 0 ? data : data.filter(s => s.day === adminDay);
-  const cats = ['すべて', ...new Set(dayF.map(s => s.category))];
+  const data = getMatchData();
+  const dayF = adminDay === 0 ? data : data.filter(m => m.day === adminDay);
+  const cats = ['すべて', ...new Set(dayF.map(m => m.sport))];
   document.getElementById('cat-chips').innerHTML = cats.map(c =>
     `<button class="chip ${c === adminCat ? 'active' : ''}" onclick="setAdminCat('${c}')">${c}</button>`
   ).join('');
-  const filtered = adminCat === 'すべて' ? dayF : dayF.filter(s => s.category === adminCat);
+  const filtered = adminCat === 'すべて' ? dayF : dayF.filter(m => m.sport === adminCat);
+  const isRelay = m => m.team2 === '';
 
-  document.getElementById('admin-schedule-list').innerHTML = filtered.map(s => `
+  document.getElementById('admin-schedule-list').innerHTML = filtered.map(m => `
     <div class="match-list">
-    <div class="match-card ${s.status}">
-      <div class="match-time">${s.time}</div>
+    <div class="match-card ${m.status}">
+      <div class="match-time">${m.time}</div>
       <div class="match-info">
-        <div class="match-name">${s.status === 'live' ? '<span class="live-dot"></span>' : ''}${s.event}</div>
-        <div class="match-place">📍 ${s.place}</div>
+        <div class="match-name">${m.status === 'live' ? '<span class="live-dot"></span>' : ''}${m.sport} ${m.round}</div>
+        <div class="match-place" style="font-size:11px;font-weight:700;margin:2px 0;">${isRelay(m) ? m.team1 : `${m.team1} vs ${m.team2}`}</div>
+        <div class="match-place">📍 ${m.venue}</div>
       </div>
       <div class="match-actions">
         <div style="display:flex;flex-direction:column;gap:4px;margin-right:6px;">
-          <button class="s-btn upcoming ${s.status==='upcoming'?'active-status':''}" onclick="setStatus(${s.id},'upcoming')">予定</button>
-          <button class="s-btn live ${s.status==='live'?'active-status':''}" onclick="setStatus(${s.id},'live')">LIVE</button>
-          <button class="s-btn done ${s.status==='done'?'active-status':''}" onclick="setStatus(${s.id},'done')">終了</button>
+          <button class="s-btn upcoming ${m.status==='upcoming'?'active-status':''}" onclick="setStatus(${m.id},'upcoming')">予定</button>
+          <button class="s-btn live ${m.status==='live'?'active-status':''}" onclick="setStatus(${m.id},'live')">LIVE</button>
+          <button class="s-btn done ${m.status==='done'?'active-status':''}" onclick="setStatus(${m.id},'done')">終了</button>
         </div>
         <div>
-          <input class="score-inp" id="result-${s.id}" placeholder="結果" value="${s.result||''}" style="width:90px;">
-          <button class="save-btn" style="display:block;margin-top:4px;width:90px;" onclick="saveResult(${s.id})">保存</button>
+          ${isRelay(m) ? '' : `
+          <input class="score-inp" id="s1-${m.id}" placeholder="${m.team1}" value="${m.score1 !== null ? m.score1 : ''}">
+          <span style="color:var(--muted);font-size:12px;">-</span>
+          <input class="score-inp" id="s2-${m.id}" placeholder="${m.team2}" value="${m.score2 !== null ? m.score2 : ''}">
+          `}
+          <div style="display:flex;gap:4px;margin-top:4px;">
+            ${!isRelay(m) ? `<input class="score-inp" id="t1-${m.id}" placeholder="チーム1名" value="${m.team1}" style="width:70px;">
+            <input class="score-inp" id="t2-${m.id}" placeholder="チーム2名" value="${m.team2}" style="width:70px;">` : ''}
+          </div>
+          <button class="save-btn" style="display:block;margin-top:4px;width:100%;" onclick="saveMatch(${m.id})">保存</button>
         </div>
       </div>
     </div>
@@ -267,15 +284,27 @@ function renderAdminSchedule() {
 
 window.setStatus = async function(id, status) {
   const current = liveData.schedules[id] || {};
-  await set(ref(db, `schedules/${id}`), { ...current, status });
+  await set(ref(db, `matches/${id}`), { ...current, status });
   showToast('ステータスを更新しました');
 };
 
-window.saveResult = async function(id) {
-  const result = document.getElementById(`result-${id}`).value;
+window.saveMatch = async function(id) {
+  const m = matchData.find(x => x.id === id);
   const current = liveData.schedules[id] || {};
-  await set(ref(db, `schedules/${id}`), { ...current, result });
-  showToast('結果を保存しました');
+  const isRelay = m && m.team2 === '';
+  const updates = { ...current };
+  if (!isRelay) {
+    const s1 = document.getElementById(`s1-${id}`)?.value;
+    const s2 = document.getElementById(`s2-${id}`)?.value;
+    const t1 = document.getElementById(`t1-${id}`)?.value;
+    const t2 = document.getElementById(`t2-${id}`)?.value;
+    if (s1 !== '') updates.score1 = Number(s1);
+    if (s2 !== '') updates.score2 = Number(s2);
+    if (t1) updates.team1 = t1;
+    if (t2) updates.team2 = t2;
+  }
+  await set(ref(db, `matches/${id}`), updates);
+  showToast('保存しました');
 };
 
 // ── TOURNAMENT ──

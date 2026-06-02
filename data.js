@@ -1,184 +1,219 @@
 // ============================================================
-// ★ data.js — 当日はここだけ編集すればOK！
+// ★ data.js — 当日はここだけ編集！
 // ============================================================
 
-// 大会の日付（年, 月-1, 日, 時, 分, 秒）
-// 1日目: 6月11日 9:00
+// 大会の日付
 const TARGET_DATE = new Date(2026, 5, 11, 9, 0, 0);
 
 // ============================================================
-// スケジュールデータ
+// 試合データ（全競技・試合単位）
 // status: "upcoming"=予定 / "live"=進行中 / "done"=終了
-// result: 結果（まだなら null のまま）
+// score1/score2: null=未入力, 数字=得点
 // ============================================================
-const scheduleData = [
-  // ===== 1日目 (6/11) =====
-  { id: 1,  day: 1, time: "09:00", event: "開会式",                    place: "陸上競技場(放送)",  category: "式典",         status: "upcoming", result: null },
+const matchData = [
 
-  // サッカー
-  { id: 10, day: 1, time: "09:35", event: "サッカー ①・④",            place: "陸上競技場",        category: "サッカー",     status: "upcoming", result: null },
-  { id: 11, day: 1, time: "10:10", event: "サッカー ②・⑤",            place: "陸上競技場",        category: "サッカー",     status: "upcoming", result: null },
-  { id: 12, day: 1, time: "10:45", event: "サッカー ③・⑥",            place: "陸上競技場",        category: "サッカー",     status: "upcoming", result: null },
-  { id: 13, day: 1, time: "11:20", event: "サッカー ⑦・⑪",            place: "陸上競技場",        category: "サッカー",     status: "upcoming", result: null },
-  { id: 14, day: 1, time: "13:05", event: "サッカー ⑧・⑫",            place: "陸上競技場",        category: "サッカー",     status: "upcoming", result: null },
-  { id: 15, day: 1, time: "13:40", event: "サッカー ⑨・⑬",            place: "陸上競技場",        category: "サッカー",     status: "upcoming", result: null },
-  { id: 16, day: 1, time: "14:15", event: "サッカー ⑩・⑭",            place: "陸上競技場",        category: "サッカー",     status: "upcoming", result: null },
-  { id: 17, day: 1, time: "14:50", event: "サッカー ⑮・⑰",            place: "陸上競技場",        category: "サッカー",     status: "upcoming", result: null },
+  // ===== サッカー 1日目 =====
+  { id: 's01',  day:1, time:'09:35', sport:'サッカー',    team1:'2C',   team2:'1-4',  venue:'陸上競技場', round:'1回戦①',  status:'upcoming', score1:null, score2:null },
+  { id: 's02',  day:1, time:'09:35', sport:'サッカー',    team1:'2B',   team2:'1-3',  venue:'陸上競技場', round:'1回戦②',  status:'upcoming', score1:null, score2:null },
+  { id: 's03',  day:1, time:'09:35', sport:'サッカー',    team1:'1-2',  team2:'2E',   venue:'陸上競技場', round:'1回戦③',  status:'upcoming', score1:null, score2:null },
+  { id: 's04',  day:1, time:'10:10', sport:'サッカー',    team1:'2M',   team2:'1-1',  venue:'陸上競技場', round:'1回戦④',  status:'upcoming', score1:null, score2:null },
+  { id: 's05',  day:1, time:'10:10', sport:'サッカー',    team1:'3E',   team2:'3B',   venue:'陸上競技場', round:'1回戦⑤',  status:'upcoming', score1:null, score2:null },
+  { id: 's06',  day:1, time:'10:10', sport:'サッカー',    team1:'4M',   team2:'TBD',  venue:'陸上競技場', round:'1回戦⑥',  status:'upcoming', score1:null, score2:null },
+  { id: 's07',  day:1, time:'10:45', sport:'サッカー',    team1:'TBD',  team2:'TBD',  venue:'陸上競技場', round:'2回戦⑦',  status:'upcoming', score1:null, score2:null },
+  { id: 's08',  day:1, time:'10:45', sport:'サッカー',    team1:'TBD',  team2:'TBD',  venue:'陸上競技場', round:'2回戦⑧',  status:'upcoming', score1:null, score2:null },
+  { id: 's09',  day:1, time:'10:45', sport:'サッカー',    team1:'TBD',  team2:'TBD',  venue:'陸上競技場', round:'2回戦⑨',  status:'upcoming', score1:null, score2:null },
+  { id: 's10',  day:1, time:'10:45', sport:'サッカー',    team1:'TBD',  team2:'TBD',  venue:'陸上競技場', round:'2回戦⑩',  status:'upcoming', score1:null, score2:null },
+  { id: 's11',  day:1, time:'11:20', sport:'サッカー',    team1:'4E',   team2:'専攻科', venue:'陸上競技場', round:'1回戦⑪', status:'upcoming', score1:null, score2:null },
+  { id: 's12',  day:1, time:'13:05', sport:'サッカー',    team1:'TBD',  team2:'TBD',  venue:'陸上競技場', round:'準々決勝⑫', status:'upcoming', score1:null, score2:null },
+  { id: 's13',  day:1, time:'13:40', sport:'サッカー',    team1:'TBD',  team2:'TBD',  venue:'陸上競技場', round:'準々決勝⑬', status:'upcoming', score1:null, score2:null },
+  { id: 's14',  day:1, time:'14:15', sport:'サッカー',    team1:'TBD',  team2:'TBD',  venue:'陸上競技場', round:'準々決勝⑭', status:'upcoming', score1:null, score2:null },
+  { id: 's15',  day:1, time:'14:50', sport:'サッカー',    team1:'TBD',  team2:'TBD',  venue:'陸上競技場', round:'準決勝⑮',  status:'upcoming', score1:null, score2:null },
+  { id: 's17',  day:1, time:'14:50', sport:'サッカー',    team1:'3C',   team2:'教職員', venue:'陸上競技場', round:'1回戦⑰', status:'upcoming', score1:null, score2:null },
 
-  // ソフトボール
-  { id: 20, day: 1, time: "09:30", event: "ソフトボール ①・④",        place: "野球場",            category: "ソフトボール", status: "upcoming", result: null },
-  { id: 21, day: 1, time: "10:25", event: "ソフトボール ②・⑤",        place: "野球場",            category: "ソフトボール", status: "upcoming", result: null },
-  { id: 22, day: 1, time: "11:20", event: "ソフトボール ③・⑥",        place: "野球場",            category: "ソフトボール", status: "upcoming", result: null },
-  { id: 23, day: 1, time: "12:55", event: "ソフトボール ⑦・⑪",        place: "野球場",            category: "ソフトボール", status: "upcoming", result: null },
-  { id: 24, day: 1, time: "13:50", event: "ソフトボール ⑧・⑫",        place: "野球場",            category: "ソフトボール", status: "upcoming", result: null },
-  { id: 25, day: 1, time: "14:45", event: "ソフトボール ⑨・⑬",        place: "野球場",            category: "ソフトボール", status: "upcoming", result: null },
+  // ===== サッカー 2日目 =====
+  { id: 's16',  day:2, time:'09:35', sport:'サッカー',    team1:'TBD',  team2:'TBD',  venue:'陸上競技場', round:'準決勝⑯',  status:'upcoming', score1:null, score2:null },
+  { id: 's18',  day:2, time:'09:35', sport:'サッカー',    team1:'5E',   team2:'TBD',  venue:'陸上競技場', round:'2回戦⑱',   status:'upcoming', score1:null, score2:null },
+  { id: 's19',  day:2, time:'10:10', sport:'サッカー',    team1:'TBD',  team2:'TBD',  venue:'陸上競技場', round:'準決勝⑲',  status:'upcoming', score1:null, score2:null },
+  { id: 's20',  day:2, time:'10:10', sport:'サッカー',    team1:'TBD',  team2:'TBD',  venue:'陸上競技場', round:'準決勝⑳',  status:'upcoming', score1:null, score2:null },
+  { id: 's21',  day:2, time:'11:00', sport:'サッカー',    team1:'TBD',  team2:'TBD',  venue:'陸上競技場', round:'決勝㉑',   status:'upcoming', score1:null, score2:null },
 
-  // バスケットボール
-  { id: 30, day: 1, time: "09:30", event: "バスケ ①・④",              place: "第一体育館",        category: "バスケ",       status: "upcoming", result: null },
-  { id: 31, day: 1, time: "10:00", event: "バスケ ②・⑤",              place: "第一体育館",        category: "バスケ",       status: "upcoming", result: null },
-  { id: 32, day: 1, time: "10:30", event: "バスケ ③・⑥",              place: "第一体育館",        category: "バスケ",       status: "upcoming", result: null },
-  { id: 33, day: 1, time: "11:00", event: "バスケ ⑦・⑪",              place: "第一体育館",        category: "バスケ",       status: "upcoming", result: null },
-  { id: 34, day: 1, time: "11:30", event: "バスケ ⑧・⑫",              place: "第一体育館",        category: "バスケ",       status: "upcoming", result: null },
-  { id: 35, day: 1, time: "12:00", event: "バスケ ⑨・⑬",              place: "第一体育館",        category: "バスケ",       status: "upcoming", result: null },
-  { id: 36, day: 1, time: "12:30", event: "バスケ ⑩・⑭",              place: "第一体育館",        category: "バスケ",       status: "upcoming", result: null },
-  { id: 37, day: 1, time: "13:00", event: "バスケ ⑮・⑯",              place: "第一体育館",        category: "バスケ",       status: "upcoming", result: null },
-  { id: 38, day: 1, time: "13:30", event: "女子バスケ ①・②",          place: "第一体育館",        category: "バスケ",       status: "upcoming", result: null },
-  { id: 39, day: 1, time: "14:00", event: "バスケ ⑰・⑱",              place: "第一体育館",        category: "バスケ",       status: "upcoming", result: null },
-  { id: 40, day: 1, time: "14:30", event: "バスケ ⑲",                  place: "第一体育館",        category: "バスケ",       status: "upcoming", result: null },
-  { id: 41, day: 1, time: "15:00", event: "バスケ ⑳",                  place: "第一体育館",        category: "バスケ",       status: "upcoming", result: null },
-  { id: 42, day: 1, time: "15:30", event: "バスケ決勝",                place: "第一体育館",        category: "バスケ",       status: "upcoming", result: null },
+  // ===== バスケ 1日目 =====
+  { id: 'b01',  day:1, time:'09:30', sport:'バスケ',      team1:'1-4',  team2:'1-3',  venue:'第一体育館 Aコート', round:'1回戦①', status:'upcoming', score1:null, score2:null },
+  { id: 'b02',  day:1, time:'09:30', sport:'バスケ',      team1:'2C',   team2:'2E',   venue:'第一体育館 Bコート', round:'1回戦②', status:'upcoming', score1:null, score2:null },
+  { id: 'b03',  day:1, time:'09:30', sport:'バスケ',      team1:'4E',   team2:'5M',   venue:'第一体育館 Cコート', round:'1回戦③', status:'upcoming', score1:null, score2:null },
+  { id: 'b04',  day:1, time:'10:00', sport:'バスケ',      team1:'2M',   team2:'TBD',  venue:'第一体育館 Aコート', round:'1回戦④', status:'upcoming', score1:null, score2:null },
+  { id: 'b05',  day:1, time:'10:00', sport:'バスケ',      team1:'1-2',  team2:'2B',   venue:'第一体育館 Bコート', round:'1回戦⑤', status:'upcoming', score1:null, score2:null },
+  { id: 'b06',  day:1, time:'10:00', sport:'バスケ',      team1:'5E',   team2:'TBD',  venue:'第一体育館 Cコート', round:'1回戦⑥', status:'upcoming', score1:null, score2:null },
+  { id: 'b07',  day:1, time:'10:30', sport:'バスケ',      team1:'TBD',  team2:'TBD',  venue:'第一体育館 Aコート', round:'2回戦⑦', status:'upcoming', score1:null, score2:null },
+  { id: 'b08',  day:1, time:'10:30', sport:'バスケ',      team1:'1-1',  team2:'TBD',  venue:'第一体育館 Bコート', round:'2回戦⑧', status:'upcoming', score1:null, score2:null },
+  { id: 'b09',  day:1, time:'10:30', sport:'バスケ',      team1:'TBD',  team2:'TBD',  venue:'第一体育館 Cコート', round:'2回戦⑨', status:'upcoming', score1:null, score2:null },
+  { id: 'b10',  day:1, time:'10:30', sport:'バスケ',      team1:'3M',   team2:'4M',   venue:'第一体育館 Dコート', round:'1回戦⑩', status:'upcoming', score1:null, score2:null },
+  { id: 'b11',  day:1, time:'11:00', sport:'バスケ',      team1:'TBD',  team2:'TBD',  venue:'第一体育館 Aコート', round:'準々決勝⑪', status:'upcoming', score1:null, score2:null },
+  { id: 'b12',  day:1, time:'11:30', sport:'バスケ',      team1:'TBD',  team2:'TBD',  venue:'第一体育館 Aコート', round:'準々決勝⑫', status:'upcoming', score1:null, score2:null },
+  { id: 'b13',  day:1, time:'12:00', sport:'バスケ',      team1:'5B',   team2:'TBD',  venue:'第一体育館 Aコート', round:'準々決勝⑬', status:'upcoming', score1:null, score2:null },
+  { id: 'b14',  day:1, time:'12:30', sport:'バスケ',      team1:'5C',   team2:'4B',   venue:'第一体育館 Bコート', round:'1回戦⑭',  status:'upcoming', score1:null, score2:null },
+  { id: 'b15',  day:1, time:'13:00', sport:'バスケ',      team1:'TBD',  team2:'TBD',  venue:'第一体育館 Aコート', round:'準決勝⑮', status:'upcoming', score1:null, score2:null },
+  { id: 'b16',  day:1, time:'13:00', sport:'バスケ',      team1:'TBD',  team2:'TBD',  venue:'第一体育館 Bコート', round:'準決勝⑯', status:'upcoming', score1:null, score2:null },
+  { id: 'bw1',  day:1, time:'13:30', sport:'女子バスケ',  team1:'2年',  team2:'1年',  venue:'第一体育館', round:'1回戦①',  status:'upcoming', score1:null, score2:null },
+  { id: 'b17',  day:1, time:'14:00', sport:'バスケ',      team1:'TBD',  team2:'TBD',  venue:'第一体育館 Aコート', round:'準々決勝⑰', status:'upcoming', score1:null, score2:null },
+  { id: 'b18',  day:1, time:'14:00', sport:'バスケ',      team1:'3C',   team2:'TBD',  venue:'第一体育館 Bコート', round:'準々決勝⑱', status:'upcoming', score1:null, score2:null },
+  { id: 'bw2',  day:1, time:'14:30', sport:'女子バスケ',  team1:'3年',  team2:'TBD',  venue:'第一体育館', round:'準決勝②',  status:'upcoming', score1:null, score2:null },
+  { id: 'b19',  day:1, time:'14:30', sport:'バスケ',      team1:'専攻科', team2:'TBD', venue:'第一体育館 Aコート', round:'準決勝⑲', status:'upcoming', score1:null, score2:null },
+  { id: 'b20',  day:1, time:'15:00', sport:'バスケ',      team1:'TBD',  team2:'TBD',  venue:'第一体育館 Aコート', round:'準決勝⑳', status:'upcoming', score1:null, score2:null },
+  { id: 'bw3',  day:1, time:'15:00', sport:'女子バスケ',  team1:'5年',  team2:'TBD',  venue:'第一体育館', round:'決勝③',    status:'upcoming', score1:null, score2:null },
+  { id: 'b21',  day:1, time:'15:30', sport:'バスケ',      team1:'TBD',  team2:'TBD',  venue:'第一体育館 Aコート', round:'決勝㉑',  status:'upcoming', score1:null, score2:null },
 
-  // バレーボール
-  { id: 50, day: 1, time: "09:35", event: "バレー ①・④",              place: "第二体育館",        category: "バレー",       status: "upcoming", result: null },
-  { id: 51, day: 1, time: "10:15", event: "バレー ②・⑤",              place: "第二体育館",        category: "バレー",       status: "upcoming", result: null },
-  { id: 52, day: 1, time: "10:55", event: "バレー ③・⑥",              place: "第二体育館",        category: "バレー",       status: "upcoming", result: null },
-  { id: 53, day: 1, time: "11:35", event: "バレー ⑦・⑪",              place: "第二体育館",        category: "バレー",       status: "upcoming", result: null },
-  { id: 54, day: 1, time: "13:00", event: "バレー ⑧・⑫",              place: "第二体育館",        category: "バレー",       status: "upcoming", result: null },
-  { id: 55, day: 1, time: "13:40", event: "バレー ⑨・⑬",              place: "第二体育館",        category: "バレー",       status: "upcoming", result: null },
-  { id: 56, day: 1, time: "14:20", event: "バレー ⑩・⑭",              place: "第二体育館",        category: "バレー",       status: "upcoming", result: null },
-  { id: 57, day: 1, time: "15:00", event: "バレー ⑮・⑰",              place: "第二体育館",        category: "バレー",       status: "upcoming", result: null },
+  // ===== ソフトボール 1日目 =====
+  { id: 'sb01', day:1, time:'09:30', sport:'ソフトボール', team1:'1-3', team2:'1-1',  venue:'野球場', round:'1回戦①', status:'upcoming', score1:null, score2:null },
+  { id: 'sb02', day:1, time:'10:25', sport:'ソフトボール', team1:'2B',  team2:'1-4',  venue:'野球場', round:'1回戦②', status:'upcoming', score1:null, score2:null },
+  { id: 'sb03', day:1, time:'11:20', sport:'ソフトボール', team1:'2M',  team2:'2E',   venue:'野球場', round:'1回戦③', status:'upcoming', score1:null, score2:null },
+  { id: 'sb04', day:1, time:'12:55', sport:'ソフトボール', team1:'2C',  team2:'1-2',  venue:'野球場', round:'1回戦④', status:'upcoming', score1:null, score2:null },
+  { id: 'sb05', day:1, time:'13:50', sport:'ソフトボール', team1:'3M',  team2:'5M',   venue:'野球場', round:'1回戦⑤', status:'upcoming', score1:null, score2:null },
+  { id: 'sb06', day:1, time:'14:45', sport:'ソフトボール', team1:'5E',  team2:'TBD',  venue:'野球場', round:'1回戦⑥', status:'upcoming', score1:null, score2:null },
 
-  // ソフトテニス
-  { id: 60, day: 1, time: "10:00", event: "ソフトテニス ①②③",        place: "テニスコート",      category: "テニス",       status: "upcoming", result: null },
-  { id: 61, day: 1, time: "11:00", event: "ソフトテニス ④⑤⑥",        place: "テニスコート",      category: "テニス",       status: "upcoming", result: null },
-  { id: 62, day: 1, time: "12:45", event: "ソフトテニス ⑦⑧⑨",        place: "テニスコート",      category: "テニス",       status: "upcoming", result: null },
-  { id: 63, day: 1, time: "13:45", event: "ソフトテニス ⑩⑪⑫",        place: "テニスコート",      category: "テニス",       status: "upcoming", result: null },
-  { id: 64, day: 1, time: "14:45", event: "ソフトテニス ⑬⑭⑮",        place: "テニスコート",      category: "テニス",       status: "upcoming", result: null },
+  // ===== ソフトボール 2日目 =====
+  { id: 'sb07', day:2, time:'09:30', sport:'ソフトボール', team1:'TBD', team2:'TBD',  venue:'野球場', round:'2回戦⑦',   status:'upcoming', score1:null, score2:null },
+  { id: 'sb08', day:2, time:'09:30', sport:'ソフトボール', team1:'TBD', team2:'TBD',  venue:'野球場', round:'2回戦⑧',   status:'upcoming', score1:null, score2:null },
+  { id: 'sb09', day:2, time:'09:30', sport:'ソフトボール', team1:'TBD', team2:'TBD',  venue:'野球場', round:'2回戦⑨',   status:'upcoming', score1:null, score2:null },
+  { id: 'sb10', day:2, time:'09:30', sport:'ソフトボール', team1:'TBD', team2:'TBD',  venue:'野球場', round:'2回戦⑩',   status:'upcoming', score1:null, score2:null },
+  { id: 'sb11', day:2, time:'10:30', sport:'ソフトボール', team1:'専攻科', team2:'4B', venue:'野球場', round:'1回戦⑪',  status:'upcoming', score1:null, score2:null },
+  { id: 'sb12', day:2, time:'10:30', sport:'ソフトボール', team1:'TBD', team2:'TBD',  venue:'野球場', round:'準々決勝⑫', status:'upcoming', score1:null, score2:null },
+  { id: 'sb13', day:2, time:'11:30', sport:'ソフトボール', team1:'TBD', team2:'TBD',  venue:'野球場', round:'準々決勝⑬', status:'upcoming', score1:null, score2:null },
+  { id: 'sb14', day:2, time:'11:30', sport:'ソフトボール', team1:'TBD', team2:'TBD',  venue:'野球場', round:'準々決勝⑭', status:'upcoming', score1:null, score2:null },
+  { id: 'sb15', day:2, time:'13:05', sport:'ソフトボール', team1:'TBD', team2:'TBD',  venue:'野球場', round:'準決勝⑮',  status:'upcoming', score1:null, score2:null },
+  { id: 'sb16', day:2, time:'13:05', sport:'ソフトボール', team1:'TBD', team2:'TBD',  venue:'野球場', round:'準決勝⑯',  status:'upcoming', score1:null, score2:null },
+  { id: 'sb17', day:2, time:'13:05', sport:'ソフトボール', team1:'TBD', team2:'TBD',  venue:'野球場', round:'準決勝⑰',  status:'upcoming', score1:null, score2:null },
+  { id: 'sb18', day:2, time:'13:05', sport:'ソフトボール', team1:'TBD', team2:'TBD',  venue:'野球場', round:'準決勝⑱',  status:'upcoming', score1:null, score2:null },
+  { id: 'sb19', day:2, time:'13:05', sport:'ソフトボール', team1:'TBD', team2:'TBD',  venue:'野球場', round:'準決勝⑲',  status:'upcoming', score1:null, score2:null },
+  { id: 'sb20', day:2, time:'13:05', sport:'ソフトボール', team1:'TBD', team2:'TBD',  venue:'野球場', round:'準決勝⑳',  status:'upcoming', score1:null, score2:null },
+  { id: 'sb21', day:2, time:'14:05', sport:'ソフトボール', team1:'TBD', team2:'TBD',  venue:'野球場', round:'決勝㉑',   status:'upcoming', score1:null, score2:null },
 
-  // Eスポーツ
-  { id: 70, day: 1, time: "09:30", event: "Eスポーツ ①・②",           place: "大講義室",          category: "Eスポーツ",    status: "upcoming", result: null },
-  { id: 71, day: 1, time: "10:15", event: "Eスポーツ ③・④",           place: "大講義室",          category: "Eスポーツ",    status: "upcoming", result: null },
-  { id: 72, day: 1, time: "11:00", event: "Eスポーツ ⑤・⑥",           place: "大講義室",          category: "Eスポーツ",    status: "upcoming", result: null },
-  { id: 73, day: 1, time: "11:45", event: "Eスポーツ ⑦・⑧",           place: "大講義室",          category: "Eスポーツ",    status: "upcoming", result: null },
-  { id: 74, day: 1, time: "13:05", event: "Eスポーツ ⑨・⑩",           place: "大講義室",          category: "Eスポーツ",    status: "upcoming", result: null },
-  { id: 75, day: 1, time: "13:50", event: "Eスポーツ ⑪・⑫",           place: "大講義室",          category: "Eスポーツ",    status: "upcoming", result: null },
-  { id: 76, day: 1, time: "14:35", event: "Eスポーツ ⑬・⑭",           place: "大講義室",          category: "Eスポーツ",    status: "upcoming", result: null },
+  // ===== バレー 1日目 =====
+  { id: 'v01',  day:1, time:'09:35', sport:'バレー',      team1:'1-2',  team2:'1-1',  venue:'第二体育館 Aコート', round:'1回戦①', status:'upcoming', score1:null, score2:null },
+  { id: 'v02',  day:1, time:'09:35', sport:'バレー',      team1:'2B',   team2:'1-3',  venue:'第二体育館 Bコート', round:'1回戦②', status:'upcoming', score1:null, score2:null },
+  { id: 'v03',  day:1, time:'09:35', sport:'バレー',      team1:'2M',   team2:'2C',   venue:'第二体育館 Cコート', round:'1回戦③', status:'upcoming', score1:null, score2:null },
+  { id: 'v04',  day:1, time:'10:15', sport:'バレー',      team1:'1-4',  team2:'2E',   venue:'第二体育館 Aコート', round:'1回戦④', status:'upcoming', score1:null, score2:null },
+  { id: 'v05',  day:1, time:'10:15', sport:'バレー',      team1:'4C',   team2:'4B',   venue:'第二体育館 Bコート', round:'1回戦⑤', status:'upcoming', score1:null, score2:null },
+  { id: 'v06',  day:1, time:'10:15', sport:'バレー',      team1:'5E',   team2:'TBD',  venue:'第二体育館 Cコート', round:'1回戦⑥', status:'upcoming', score1:null, score2:null },
+  { id: 'v07',  day:1, time:'10:55', sport:'バレー',      team1:'TBD',  team2:'TBD',  venue:'第二体育館 Aコート', round:'2回戦⑦', status:'upcoming', score1:null, score2:null },
+  { id: 'v08',  day:1, time:'10:55', sport:'バレー',      team1:'TBD',  team2:'TBD',  venue:'第二体育館 Bコート', round:'2回戦⑧', status:'upcoming', score1:null, score2:null },
+  { id: 'v09',  day:1, time:'10:55', sport:'バレー',      team1:'TBD',  team2:'TBD',  venue:'第二体育館 Cコート', round:'2回戦⑨', status:'upcoming', score1:null, score2:null },
+  { id: 'v10',  day:1, time:'10:55', sport:'バレー',      team1:'TBD',  team2:'TBD',  venue:'第二体育館 Dコート', round:'2回戦⑩', status:'upcoming', score1:null, score2:null },
+  { id: 'v11',  day:1, time:'11:35', sport:'バレー',      team1:'5M',   team2:'3E',   venue:'第二体育館 Aコート', round:'1回戦⑪', status:'upcoming', score1:null, score2:null },
+  { id: 'v12',  day:1, time:'13:00', sport:'バレー',      team1:'TBD',  team2:'TBD',  venue:'第二体育館 Aコート', round:'準々決勝⑫', status:'upcoming', score1:null, score2:null },
+  { id: 'v13',  day:1, time:'13:40', sport:'バレー',      team1:'TBD',  team2:'TBD',  venue:'第二体育館 Aコート', round:'準々決勝⑬', status:'upcoming', score1:null, score2:null },
+  { id: 'v14',  day:1, time:'14:20', sport:'バレー',      team1:'TBD',  team2:'TBD',  venue:'第二体育館 Aコート', round:'準々決勝⑭', status:'upcoming', score1:null, score2:null },
+  { id: 'v15',  day:1, time:'15:00', sport:'バレー',      team1:'TBD',  team2:'TBD',  venue:'第二体育館 Aコート', round:'準決勝⑮', status:'upcoming', score1:null, score2:null },
+  { id: 'v17',  day:1, time:'15:00', sport:'バレー',      team1:'専攻科', team2:'3B',  venue:'第二体育館 Bコート', round:'1回戦⑰', status:'upcoming', score1:null, score2:null },
 
-  // ===== 2日目 (6/12) =====
-  // サッカー
-  { id: 100, day: 2, time: "09:35", event: "サッカー ⑯・⑱",           place: "陸上競技場",        category: "サッカー",     status: "upcoming", result: null },
-  { id: 101, day: 2, time: "10:10", event: "サッカー ⑲・⑳",           place: "陸上競技場",        category: "サッカー",     status: "upcoming", result: null },
-  { id: 102, day: 2, time: "11:00", event: "サッカー ㉑（決勝）",      place: "陸上競技場",        category: "サッカー",     status: "upcoming", result: null },
+  // ===== バレー 2日目 =====
+  { id: 'v16',  day:2, time:'09:35', sport:'バレー',      team1:'TBD',  team2:'TBD',  venue:'第二体育館 Aコート', round:'準決勝⑯', status:'upcoming', score1:null, score2:null },
+  { id: 'vw1',  day:2, time:'10:15', sport:'女子バレー',  team1:'4年',  team2:'3年',  venue:'第二体育館', round:'1回戦①',  status:'upcoming', score1:null, score2:null },
+  { id: 'v18',  day:2, time:'10:15', sport:'バレー',      team1:'TBD',  team2:'TBD',  venue:'第二体育館 Bコート', round:'2回戦⑱', status:'upcoming', score1:null, score2:null },
+  { id: 'v19',  day:2, time:'10:50', sport:'バレー',      team1:'TBD',  team2:'TBD',  venue:'第二体育館 Aコート', round:'準決勝⑲', status:'upcoming', score1:null, score2:null },
+  { id: 'vw2',  day:2, time:'10:50', sport:'女子バレー',  team1:'5年',  team2:'TBD',  venue:'第二体育館', round:'準決勝②',  status:'upcoming', score1:null, score2:null },
+  { id: 'v20',  day:2, time:'11:30', sport:'バレー',      team1:'TBD',  team2:'TBD',  venue:'第二体育館 Aコート', round:'準決勝⑳', status:'upcoming', score1:null, score2:null },
+  { id: 'vw3',  day:2, time:'11:30', sport:'女子バレー',  team1:'1年',  team2:'TBD',  venue:'第二体育館', round:'決勝③',    status:'upcoming', score1:null, score2:null },
+  { id: 'v21',  day:2, time:'13:05', sport:'バレー',      team1:'TBD',  team2:'TBD',  venue:'第二体育館 Aコート', round:'決勝㉑',  status:'upcoming', score1:null, score2:null },
 
-  // ソフトボール
-  { id: 110, day: 2, time: "09:30", event: "ソフトボール ⑩・⑭",       place: "野球場",            category: "ソフトボール", status: "upcoming", result: null },
-  { id: 111, day: 2, time: "10:30", event: "ソフトボール ⑮・⑰",       place: "野球場",            category: "ソフトボール", status: "upcoming", result: null },
-  { id: 112, day: 2, time: "11:30", event: "ソフトボール ⑯・⑱",       place: "野球場",            category: "ソフトボール", status: "upcoming", result: null },
-  { id: 113, day: 2, time: "13:05", event: "ソフトボール ⑲・⑳",       place: "野球場",            category: "ソフトボール", status: "upcoming", result: null },
-  { id: 114, day: 2, time: "14:05", event: "ソフトボール決勝 ㉑",      place: "野球場",            category: "ソフトボール", status: "upcoming", result: null },
+  // ===== バドミントン 2日目 =====
+  { id: 'bd01', day:2, time:'09:30', sport:'バドミントン', team1:'1-3', team2:'1-2',  venue:'第一体育館 Aコート', round:'1回戦①', status:'upcoming', score1:null, score2:null },
+  { id: 'bd02', day:2, time:'09:30', sport:'バドミントン', team1:'2M',  team2:'1-4',  venue:'第一体育館 Bコート', round:'1回戦②', status:'upcoming', score1:null, score2:null },
+  { id: 'bd03', day:2, time:'09:30', sport:'バドミントン', team1:'2C',  team2:'2B',   venue:'第一体育館 Cコート', round:'1回戦③', status:'upcoming', score1:null, score2:null },
+  { id: 'bd04', day:2, time:'10:05', sport:'バドミントン', team1:'2E',  team2:'1-1',  venue:'第一体育館 Aコート', round:'1回戦④', status:'upcoming', score1:null, score2:null },
+  { id: 'bd05', day:2, time:'10:05', sport:'バドミントン', team1:'3C',  team2:'4B',   venue:'第一体育館 Bコート', round:'1回戦⑤', status:'upcoming', score1:null, score2:null },
+  { id: 'bd06', day:2, time:'10:05', sport:'バドミントン', team1:'3M',  team2:'TBD',  venue:'第一体育館 Cコート', round:'1回戦⑥', status:'upcoming', score1:null, score2:null },
+  { id: 'bd07', day:2, time:'10:40', sport:'バドミントン', team1:'TBD', team2:'TBD',  venue:'第一体育館 Aコート', round:'2回戦⑦', status:'upcoming', score1:null, score2:null },
+  { id: 'bd08', day:2, time:'10:40', sport:'バドミントン', team1:'TBD', team2:'TBD',  venue:'第一体育館 Bコート', round:'2回戦⑧', status:'upcoming', score1:null, score2:null },
+  { id: 'bd09', day:2, time:'10:40', sport:'バドミントン', team1:'TBD', team2:'TBD',  venue:'第一体育館 Cコート', round:'2回戦⑨', status:'upcoming', score1:null, score2:null },
+  { id: 'bd10', day:2, time:'11:15', sport:'バドミントン', team1:'TBD', team2:'TBD',  venue:'第一体育館 Aコート', round:'準々決勝⑩', status:'upcoming', score1:null, score2:null },
+  { id: 'bd11', day:2, time:'11:15', sport:'バドミントン', team1:'3E',  team2:'5B',   venue:'第一体育館 Bコート', round:'1回戦⑪', status:'upcoming', score1:null, score2:null },
+  { id: 'bd12', day:2, time:'11:15', sport:'バドミントン', team1:'TBD', team2:'TBD',  venue:'第一体育館 Cコート', round:'準々決勝⑫', status:'upcoming', score1:null, score2:null },
+  { id: 'bd13', day:2, time:'11:50', sport:'バドミントン', team1:'TBD', team2:'TBD',  venue:'第一体育館 Aコート', round:'準々決勝⑬', status:'upcoming', score1:null, score2:null },
+  { id: 'bd14', day:2, time:'11:50', sport:'バドミントン', team1:'TBD', team2:'TBD',  venue:'第一体育館 Bコート', round:'準々決勝⑭', status:'upcoming', score1:null, score2:null },
+  { id: 'bd15', day:2, time:'11:50', sport:'バドミントン', team1:'TBD', team2:'TBD',  venue:'第一体育館 Cコート', round:'準々決勝⑮', status:'upcoming', score1:null, score2:null },
+  { id: 'bd16', day:2, time:'12:50', sport:'バドミントン', team1:'TBD', team2:'TBD',  venue:'第一体育館 Aコート', round:'準決勝⑯', status:'upcoming', score1:null, score2:null },
+  { id: 'bd17', day:2, time:'12:50', sport:'バドミントン', team1:'TBD', team2:'TBD',  venue:'第一体育館 Bコート', round:'準決勝⑰', status:'upcoming', score1:null, score2:null },
+  { id: 'bd18', day:2, time:'12:50', sport:'バドミントン', team1:'TBD', team2:'TBD',  venue:'第一体育館 Cコート', round:'準決勝⑱', status:'upcoming', score1:null, score2:null },
+  { id: 'bd19', day:2, time:'14:00', sport:'バドミントン', team1:'TBD', team2:'TBD',  venue:'第一体育館 Aコート', round:'準決勝⑲', status:'upcoming', score1:null, score2:null },
+  { id: 'bd20', day:2, time:'14:00', sport:'バドミントン', team1:'TBD', team2:'TBD',  venue:'第一体育館 Bコート', round:'準決勝⑳', status:'upcoming', score1:null, score2:null },
+  { id: 'bd21', day:2, time:'14:45', sport:'バドミントン', team1:'TBD', team2:'TBD',  venue:'第一体育館 Aコート', round:'決勝㉑',  status:'upcoming', score1:null, score2:null },
+  { id: 'bdw1',day:2, time:'13:25', sport:'女子バドミントン', team1:'3年', team2:'5年', venue:'第一体育館', round:'1回戦①', status:'upcoming', score1:null, score2:null },
+  { id: 'bdw2',day:2, time:'14:00', sport:'女子バドミントン', team1:'4年', team2:'TBD', venue:'第一体育館', round:'準決勝②', status:'upcoming', score1:null, score2:null },
+  { id: 'bdw3',day:2, time:'14:45', sport:'女子バドミントン', team1:'TBD', team2:'TBD', venue:'第一体育館', round:'決勝③',   status:'upcoming', score1:null, score2:null },
 
-  // バスケ
-  { id: 120, day: 2, time: "09:30", event: "バドミントン ①②③",        place: "第一体育館",        category: "バドミントン", status: "upcoming", result: null },
-  { id: 121, day: 2, time: "10:05", event: "バドミントン ④⑤⑥",        place: "第一体育館",        category: "バドミントン", status: "upcoming", result: null },
-  { id: 122, day: 2, time: "10:40", event: "バドミントン ⑦⑧⑨",        place: "第一体育館",        category: "バドミントン", status: "upcoming", result: null },
-  { id: 123, day: 2, time: "11:15", event: "バドミントン ⑩⑪⑫",        place: "第一体育館",        category: "バドミントン", status: "upcoming", result: null },
-  { id: 124, day: 2, time: "11:50", event: "バドミントン ⑬⑭⑮",        place: "第一体育館",        category: "バドミントン", status: "upcoming", result: null },
-  { id: 125, day: 2, time: "12:50", event: "バドミントン ⑯⑰⑱",        place: "第一体育館",        category: "バドミントン", status: "upcoming", result: null },
-  { id: 126, day: 2, time: "14:00", event: "バドミントン ⑲・⑳",        place: "第一体育館",        category: "バドミントン", status: "upcoming", result: null },
-  { id: 127, day: 2, time: "14:45", event: "バドミントン決勝",         place: "第一体育館",        category: "バドミントン", status: "upcoming", result: null },
+  // ===== ソフトテニス 1日目 =====
+  { id: 'st01', day:1, time:'10:00', sport:'ソフトテニス', team1:'1-4', team2:'1-2',  venue:'テニスコート A', round:'1回戦①', status:'upcoming', score1:null, score2:null },
+  { id: 'st02', day:1, time:'10:00', sport:'ソフトテニス', team1:'2B',  team2:'2E',   venue:'テニスコート B', round:'1回戦②', status:'upcoming', score1:null, score2:null },
+  { id: 'st03', day:1, time:'10:00', sport:'ソフトテニス', team1:'2M',  team2:'1-3',  venue:'テニスコート C', round:'1回戦③', status:'upcoming', score1:null, score2:null },
+  { id: 'st04', day:1, time:'11:00', sport:'ソフトテニス', team1:'2C',  team2:'1-1',  venue:'テニスコート A', round:'1回戦④', status:'upcoming', score1:null, score2:null },
+  { id: 'st05', day:1, time:'11:00', sport:'ソフトテニス', team1:'3C',  team2:'5E',   venue:'テニスコート B', round:'1回戦⑤', status:'upcoming', score1:null, score2:null },
+  { id: 'st06', day:1, time:'11:00', sport:'ソフトテニス', team1:'5M',  team2:'TBD',  venue:'テニスコート C', round:'1回戦⑥', status:'upcoming', score1:null, score2:null },
+  { id: 'st07', day:1, time:'12:45', sport:'ソフトテニス', team1:'TBD', team2:'TBD',  venue:'テニスコート A', round:'2回戦⑦', status:'upcoming', score1:null, score2:null },
+  { id: 'st08', day:1, time:'12:45', sport:'ソフトテニス', team1:'TBD', team2:'TBD',  venue:'テニスコート B', round:'2回戦⑧', status:'upcoming', score1:null, score2:null },
+  { id: 'st09', day:1, time:'12:45', sport:'ソフトテニス', team1:'TBD', team2:'TBD',  venue:'テニスコート C', round:'2回戦⑨', status:'upcoming', score1:null, score2:null },
+  { id: 'st10', day:1, time:'13:45', sport:'ソフトテニス', team1:'TBD', team2:'TBD',  venue:'テニスコート A', round:'準々決勝⑩', status:'upcoming', score1:null, score2:null },
+  { id: 'st11', day:1, time:'13:45', sport:'ソフトテニス', team1:'3E',  team2:'5C',   venue:'テニスコート B', round:'1回戦⑪', status:'upcoming', score1:null, score2:null },
+  { id: 'st12', day:1, time:'13:45', sport:'ソフトテニス', team1:'TBD', team2:'TBD',  venue:'テニスコート C', round:'準々決勝⑫', status:'upcoming', score1:null, score2:null },
+  { id: 'st13', day:1, time:'14:45', sport:'ソフトテニス', team1:'TBD', team2:'TBD',  venue:'テニスコート A', round:'準々決勝⑬', status:'upcoming', score1:null, score2:null },
+  { id: 'st14', day:1, time:'14:45', sport:'ソフトテニス', team1:'TBD', team2:'TBD',  venue:'テニスコート B', round:'準々決勝⑭', status:'upcoming', score1:null, score2:null },
+  { id: 'st15', day:1, time:'14:45', sport:'ソフトテニス', team1:'TBD', team2:'TBD',  venue:'テニスコート C', round:'準々決勝⑮', status:'upcoming', score1:null, score2:null },
 
-  // バレー
-  { id: 130, day: 2, time: "09:35", event: "バレー ⑯・⑱",             place: "第二体育館",        category: "バレー",       status: "upcoming", result: null },
-  { id: 131, day: 2, time: "10:15", event: "女子バレー ①・②",         place: "第二体育館",        category: "バレー",       status: "upcoming", result: null },
-  { id: 132, day: 2, time: "10:50", event: "バレー ⑲",                 place: "第二体育館",        category: "バレー",       status: "upcoming", result: null },
-  { id: 133, day: 2, time: "11:30", event: "バレー ⑳",                 place: "第二体育館",        category: "バレー",       status: "upcoming", result: null },
-  { id: 134, day: 2, time: "13:05", event: "バレー決勝 ㉑",            place: "第二体育館",        category: "バレー",       status: "upcoming", result: null },
+  // ===== ソフトテニス 2日目 =====
+  { id: 'st16', day:2, time:'09:30', sport:'ソフトテニス', team1:'TBD', team2:'TBD',  venue:'テニスコート A', round:'準決勝⑯', status:'upcoming', score1:null, score2:null },
+  { id: 'st17', day:2, time:'09:30', sport:'ソフトテニス', team1:'TBD', team2:'TBD',  venue:'テニスコート B', round:'準決勝⑰', status:'upcoming', score1:null, score2:null },
+  { id: 'st18', day:2, time:'09:30', sport:'ソフトテニス', team1:'専攻科', team2:'4C', venue:'テニスコート C', round:'1回戦⑱', status:'upcoming', score1:null, score2:null },
+  { id: 'st19', day:2, time:'10:25', sport:'ソフトテニス', team1:'TBD', team2:'TBD',  venue:'テニスコート A', round:'準決勝⑲', status:'upcoming', score1:null, score2:null },
+  { id: 'st20', day:2, time:'10:25', sport:'ソフトテニス', team1:'TBD', team2:'TBD',  venue:'テニスコート B', round:'準決勝⑳', status:'upcoming', score1:null, score2:null },
+  { id: 'st21', day:2, time:'11:20', sport:'ソフトテニス', team1:'TBD', team2:'TBD',  venue:'テニスコート A', round:'決勝㉑',  status:'upcoming', score1:null, score2:null },
 
-  // ソフトテニス
-  { id: 140, day: 2, time: "09:30", event: "ソフトテニス ⑯⑰⑱",       place: "テニスコート",      category: "テニス",       status: "upcoming", result: null },
-  { id: 141, day: 2, time: "10:25", event: "ソフトテニス ⑲・⑳",       place: "テニスコート",      category: "テニス",       status: "upcoming", result: null },
-  { id: 142, day: 2, time: "11:20", event: "ソフトテニス決勝",        place: "テニスコート",      category: "テニス",       status: "upcoming", result: null },
+  // ===== Eスポーツ 1日目 =====
+  { id: 'e01',  day:1, time:'09:30', sport:'Eスポーツ',   team1:'2C',  team2:'1-3',  venue:'大講義室 A台', round:'1回戦①', status:'upcoming', score1:null, score2:null },
+  { id: 'e02',  day:1, time:'09:30', sport:'Eスポーツ',   team1:'2B',  team2:'2M',   venue:'大講義室 B台', round:'1回戦②', status:'upcoming', score1:null, score2:null },
+  { id: 'e03',  day:1, time:'10:15', sport:'Eスポーツ',   team1:'1-4', team2:'1-1',  venue:'大講義室 A台', round:'1回戦③', status:'upcoming', score1:null, score2:null },
+  { id: 'e04',  day:1, time:'10:15', sport:'Eスポーツ',   team1:'1-2', team2:'2E',   venue:'大講義室 B台', round:'1回戦④', status:'upcoming', score1:null, score2:null },
+  { id: 'e05',  day:1, time:'11:00', sport:'Eスポーツ',   team1:'5B',  team2:'5C',   venue:'大講義室 A台', round:'1回戦⑤', status:'upcoming', score1:null, score2:null },
+  { id: 'e06',  day:1, time:'11:00', sport:'Eスポーツ',   team1:'4C',  team2:'TBD',  venue:'大講義室 B台', round:'1回戦⑥', status:'upcoming', score1:null, score2:null },
+  { id: 'e07',  day:1, time:'11:45', sport:'Eスポーツ',   team1:'TBD', team2:'TBD',  venue:'大講義室 A台', round:'2回戦⑦', status:'upcoming', score1:null, score2:null },
+  { id: 'e08',  day:1, time:'11:45', sport:'Eスポーツ',   team1:'TBD', team2:'TBD',  venue:'大講義室 B台', round:'2回戦⑧', status:'upcoming', score1:null, score2:null },
+  { id: 'e09',  day:1, time:'13:05', sport:'Eスポーツ',   team1:'TBD', team2:'TBD',  venue:'大講義室 A台', round:'2回戦⑨', status:'upcoming', score1:null, score2:null },
+  { id: 'e10',  day:1, time:'13:05', sport:'Eスポーツ',   team1:'TBD', team2:'TBD',  venue:'大講義室 B台', round:'2回戦⑩', status:'upcoming', score1:null, score2:null },
+  { id: 'e11',  day:1, time:'13:50', sport:'Eスポーツ',   team1:'3B',  team2:'4M',   venue:'大講義室 A台', round:'1回戦⑪', status:'upcoming', score1:null, score2:null },
+  { id: 'e12',  day:1, time:'13:50', sport:'Eスポーツ',   team1:'TBD', team2:'TBD',  venue:'大講義室 B台', round:'準々決勝⑫', status:'upcoming', score1:null, score2:null },
+  { id: 'e13',  day:1, time:'14:35', sport:'Eスポーツ',   team1:'TBD', team2:'TBD',  venue:'大講義室 A台', round:'準々決勝⑬', status:'upcoming', score1:null, score2:null },
+  { id: 'e14',  day:1, time:'14:35', sport:'Eスポーツ',   team1:'TBD', team2:'TBD',  venue:'大講義室 B台', round:'準々決勝⑭', status:'upcoming', score1:null, score2:null },
 
-  // Eスポーツ
-  { id: 150, day: 2, time: "09:50", event: "Eスポーツ ⑮・⑯",          place: "大講義室",          category: "Eスポーツ",    status: "upcoming", result: null },
-  { id: 151, day: 2, time: "10:35", event: "Eスポーツ ⑰・⑱",          place: "大講義室",          category: "Eスポーツ",    status: "upcoming", result: null },
-  { id: 152, day: 2, time: "11:20", event: "Eスポーツ ⑲・⑳",          place: "大講義室",          category: "Eスポーツ",    status: "upcoming", result: null },
-  { id: 153, day: 2, time: "13:00", event: "Eスポーツ ㉑",             place: "大講義室",          category: "Eスポーツ",    status: "upcoming", result: null },
-  { id: 154, day: 2, time: "13:00", event: "Eスポーツ決勝",            place: "大講義室",          category: "Eスポーツ",    status: "upcoming", result: null },
+  // ===== Eスポーツ 2日目 =====
+  { id: 'e15',  day:2, time:'09:50', sport:'Eスポーツ',   team1:'TBD', team2:'TBD',  venue:'大講義室 A台', round:'準々決勝⑮', status:'upcoming', score1:null, score2:null },
+  { id: 'e16',  day:2, time:'09:50', sport:'Eスポーツ',   team1:'TBD', team2:'TBD',  venue:'大講義室 B台', round:'準々決勝⑯', status:'upcoming', score1:null, score2:null },
+  { id: 'e17',  day:2, time:'10:35', sport:'Eスポーツ',   team1:'TBD', team2:'TBD',  venue:'大講義室 A台', round:'準決勝⑰',  status:'upcoming', score1:null, score2:null },
+  { id: 'e18',  day:2, time:'10:35', sport:'Eスポーツ',   team1:'TBD', team2:'TBD',  venue:'大講義室 B台', round:'準決勝⑱',  status:'upcoming', score1:null, score2:null },
+  { id: 'e19',  day:2, time:'11:20', sport:'Eスポーツ',   team1:'TBD', team2:'TBD',  venue:'大講義室 A台', round:'準決勝⑲',  status:'upcoming', score1:null, score2:null },
+  { id: 'e20',  day:2, time:'11:20', sport:'Eスポーツ',   team1:'TBD', team2:'TBD',  venue:'大講義室 B台', round:'準決勝⑳',  status:'upcoming', score1:null, score2:null },
+  { id: 'e21',  day:2, time:'13:00', sport:'Eスポーツ',   team1:'TBD', team2:'TBD',  venue:'大講義室 A台', round:'決勝㉑',   status:'upcoming', score1:null, score2:null },
 
-  // リレー
-  { id: 160, day: 2, time: "14:00", event: "リレー Aブロック第一試合", place: "陸上競技場",        category: "リレー",       status: "upcoming", result: null },
-  { id: 161, day: 2, time: "14:00", event: "リレー Bブロック第一試合", place: "陸上競技場",        category: "リレー",       status: "upcoming", result: null },
-  { id: 162, day: 2, time: "14:25", event: "リレー Aブロック第二試合", place: "陸上競技場",        category: "リレー",       status: "upcoming", result: null },
-  { id: 163, day: 2, time: "14:25", event: "リレー Bブロック第二試合", place: "陸上競技場",        category: "リレー",       status: "upcoming", result: null },
-  { id: 164, day: 2, time: "14:50", event: "リレー Aブロック第三試合", place: "陸上競技場",        category: "リレー",       status: "upcoming", result: null },
-  { id: 165, day: 2, time: "14:50", event: "リレー Bブロック第三試合", place: "陸上競技場",        category: "リレー",       status: "upcoming", result: null },
-  { id: 166, day: 2, time: "15:20", event: "リレー A・Bブロック準決勝", place: "陸上競技場",       category: "リレー",       status: "upcoming", result: null },
-  { id: 167, day: 2, time: "15:50", event: "リレー 全体決勝",          place: "陸上競技場",        category: "リレー",       status: "upcoming", result: null },
+  // ===== リレー 2日目 =====
+  { id: 'r01',  day:2, time:'14:00', sport:'リレー', team1:'2C・2E・2B・1-2', team2:'',  venue:'陸上競技場', round:'Aブロック第1試合', status:'upcoming', score1:null, score2:null },
+  { id: 'r02',  day:2, time:'14:00', sport:'リレー', team1:'5C・5M・教職員・3C', team2:'', venue:'陸上競技場', round:'Bブロック第1試合', status:'upcoming', score1:null, score2:null },
+  { id: 'r03',  day:2, time:'14:25', sport:'リレー', team1:'3E・専攻科・3M・4B', team2:'', venue:'陸上競技場', round:'Aブロック第2試合', status:'upcoming', score1:null, score2:null },
+  { id: 'r04',  day:2, time:'14:25', sport:'リレー', team1:'2M・1-3・1-4・1-1', team2:'', venue:'陸上競技場', round:'Bブロック第2試合', status:'upcoming', score1:null, score2:null },
+  { id: 'r05',  day:2, time:'14:50', sport:'リレー', team1:'5E・4M・4C',         team2:'', venue:'陸上競技場', round:'Aブロック第3試合', status:'upcoming', score1:null, score2:null },
+  { id: 'r06',  day:2, time:'14:50', sport:'リレー', team1:'5B・3B・4E',         team2:'', venue:'陸上競技場', round:'Bブロック第3試合', status:'upcoming', score1:null, score2:null },
+  { id: 'r07',  day:2, time:'15:20', sport:'リレー', team1:'TBD',                team2:'', venue:'陸上競技場', round:'Aブロック代表決定戦', status:'upcoming', score1:null, score2:null },
+  { id: 'r08',  day:2, time:'15:20', sport:'リレー', team1:'TBD',                team2:'', venue:'陸上競技場', round:'Bブロック代表決定戦', status:'upcoming', score1:null, score2:null },
+  { id: 'r09',  day:2, time:'15:50', sport:'リレー', team1:'TBD',                team2:'', venue:'陸上競技場', round:'全体決勝',           status:'upcoming', score1:null, score2:null },
 
-  // 女子バドミントン
-  { id: 170, day: 2, time: "13:25", event: "女子バドミントン ①・②",   place: "第一体育館",        category: "バドミントン", status: "upcoming", result: null },
-  { id: 171, day: 2, time: "14:00", event: "女子バドミントン ③",       place: "第一体育館",        category: "バドミントン", status: "upcoming", result: null },
-  { id: 172, day: 2, time: "14:45", event: "女子バドミントン決勝",     place: "第一体育館",        category: "バドミントン", status: "upcoming", result: null },
-
-  // 閉会式
-  { id: 200, day: 2, time: "16:10", event: "閉会式・表彰",             place: "陸上競技場",        category: "式典",         status: "upcoming", result: null },
+  // ===== 式典 =====
+  { id: 'c01',  day:1, time:'09:00', sport:'式典', team1:'開会式', team2:'',  venue:'陸上競技場(放送)', round:'', status:'upcoming', score1:null, score2:null },
+  { id: 'c02',  day:2, time:'16:10', sport:'式典', team1:'閉会式・表彰', team2:'', venue:'陸上競技場', round:'', status:'upcoming', score1:null, score2:null },
 ];
 
-// ============================================================
-// 競技データ
-// ============================================================
-const eventData = [
-  {
-    icon: "⚽", name: "サッカー", meta: "7人制 クラス対抗トーナメント",
-    place: "陸上競技場(グラウンド)",
-    rule: "前後半10分ハーフ。7人制。同点はサドンデスPK。オフサイドなし。スパイク不可。"
-  },
-  {
-    icon: "🏀", name: "バスケットボール", meta: "5人制 クラス対抗トーナメント",
-    place: "第一体育館",
-    rule: "前後半7分（決勝10分）。5人制。同点は3人フリースローで決定。ファールアウト・チームファウル適用なし。"
-  },
-  {
-    icon: "🥎", name: "ソフトボール", meta: "9人制 クラス対抗トーナメント",
-    place: "野球場",
-    rule: "40分・3回制。9人制。同点は代表者3名ジャンケン（先に2勝）。盗塁なし。"
-  },
-  {
-    icon: "🏐", name: "バレーボール", meta: "6人制 クラス対抗トーナメント",
-    place: "第二体育館",
-    rule: "25分（決勝35分）。1セット15点制3セットマッチ（決勝25点制）。ネット高2m30cm（女子2m15cm）。"
-  },
-  {
-    icon: "🏸", name: "バドミントン", meta: "5人制 クラス対抗トーナメント",
-    place: "第一体育館",
-    rule: "40分。ダブルス2試合・シングルス1試合。1ゲーム15点制3ゲームマッチ。先に2試合勝利したチームが勝ち。"
-  },
-  {
-    icon: "🎾", name: "ソフトテニス", meta: "ダブルス3組 クラス対抗トーナメント",
-    place: "テニスコート",
-    rule: "40分。ダブルス3試合。先に2試合勝利したチームが勝ち。"
-  },
-  {
-    icon: "🎮", name: "Eスポーツ", meta: "大乱闘スマッシュブラザーズ SPECIAL",
-    place: "大講義室",
-    rule: "3ストック制 1vs1×3回（5分・終点・アイテムなし）。先に2試合勝利。コントローラー持ち込み可。"
-  },
-  {
-    icon: "🏃", name: "リレー", meta: "8×100m クラス対抗",
-    place: "陸上競技場",
-    rule: "8人×100m。A・Bブロックに分け、各ブロック予選→準決勝→全体決勝。フライング2回で失格。スパイク不可。"
-  },
-];
+// スポーツ一覧（フィルター用）
+const sportList = ['サッカー','バスケ','女子バスケ','ソフトボール','バレー','女子バレー','バドミントン','女子バドミントン','ソフトテニス','Eスポーツ','リレー','式典'];
 
-
+// スポーツアイコン
+const sportIcons = {
+  'サッカー':'⚽','バスケ':'🏀','女子バスケ':'🏀','ソフトボール':'🥎',
+  'バレー':'🏐','女子バレー':'🏐','バドミントン':'🏸','女子バドミントン':'🏸',
+  'ソフトテニス':'🎾','Eスポーツ':'🎮','リレー':'🏃','式典':'🎌'
+};
