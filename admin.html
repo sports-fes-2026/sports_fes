@@ -145,12 +145,32 @@
 <!-- data.js を先に読み込む -->
 <script src="data.js"></script>
 
+<!-- ログイン用（moduleより先に定義する必要あり） -->
+<script>
+const ADMIN_PASSWORD = "2026";
+window.doLogin = function() {
+  const pw = document.getElementById('pw-input').value.trim();
+  if (pw === ADMIN_PASSWORD) {
+    document.getElementById('login-wrap').style.display = 'none';
+    document.getElementById('main-wrap').style.display = 'block';
+    window._adminLoggedIn = true;
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+  }
+};
+window.doLogout = function() {
+  document.getElementById('login-wrap').style.display = 'flex';
+  document.getElementById('main-wrap').style.display = 'none';
+  document.getElementById('pw-input').value = '';
+  window._adminLoggedIn = false;
+};
+</script>
+
 <!-- Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
-// ★ Firebase設定
 const firebaseConfig = {
   apiKey: "AIzaSyBKyq02jcUWoqgy_SXL4_TLGXEKQvXMuMw",
   authDomain: "sports-fes-dc27c.firebaseapp.com",
@@ -162,19 +182,17 @@ const firebaseConfig = {
   measurementId: "G-7SXS7V1T75"
 };
 
-// ★ 管理者パスワード（ここを変更してください）
-const ADMIN_PASSWORD = "sports2026";
-
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 // ── STATE ──
 let adminDay = 0, adminCat = 'すべて', adminSport = '';
-let liveData = { schedules: {}, tournaments: {} };
+let liveData = { matches: {} };
 
-// ── LOGIN ──
+// ── ログイン後にFirebase初期化を呼ぶ ──
+const _origLogin = window.doLogin;
 window.doLogin = function() {
-  const pw = document.getElementById('pw-input').value;
+  const pw = document.getElementById('pw-input').value.trim();
   if (pw === ADMIN_PASSWORD) {
     document.getElementById('login-wrap').style.display = 'none';
     document.getElementById('main-wrap').style.display = 'block';
@@ -182,12 +200,6 @@ window.doLogin = function() {
   } else {
     document.getElementById('login-err').style.display = 'block';
   }
-};
-
-window.doLogout = function() {
-  document.getElementById('login-wrap').style.display = 'flex';
-  document.getElementById('main-wrap').style.display = 'none';
-  document.getElementById('pw-input').value = '';
 };
 
 // ── FIREBASE ──
