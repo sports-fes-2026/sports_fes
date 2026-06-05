@@ -147,7 +147,7 @@
 
 <!-- ログイン用（moduleより先に定義する必要あり） -->
 <script>
-const ADMIN_PASSWORD = "sports2026";
+const ADMIN_PASSWORD = "2026";
 window.doLogin = function() {
   const pw = document.getElementById('pw-input').value.trim();
   if (pw === ADMIN_PASSWORD) {
@@ -392,6 +392,6 @@ function showToast(msg) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2000);
 }
-
+</script>
 </body>
 </html>
