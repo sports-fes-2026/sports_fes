@@ -147,7 +147,7 @@
 
 <!-- ログイン用（moduleより先に定義する必要あり） -->
 <script>
-const ADMIN_PASSWORD = "2026";
+const ADMIN_PASSWORD = "sports2026";
 window.doLogin = function() {
   const pw = document.getElementById('pw-input').value.trim();
   if (pw === ADMIN_PASSWORD) {
@@ -204,12 +204,10 @@ window.doLogin = function() {
 
 // ── FIREBASE ──
 function initFirebase() {
-  // スケジュールの変更を監視
   onValue(ref(db, 'matches'), snap => {
-    liveData.schedules = snap.val() || {};
+    liveData.matches = snap.val() || {};
     renderAdminSchedule();
   });
-  // トーナメントの変更を監視
   onValue(ref(db, 'tournaments'), snap => {
     liveData.tournaments = snap.val() || {};
     renderAdminTournament();
@@ -239,7 +237,7 @@ window.setAdminCat = function(c) {
 
 function getMatchData() {
   return matchData.map(m => {
-    const fb = liveData.schedules[m.id] || {};
+    const fb = liveData.matches[m.id] || {};
     return {
       ...m,
       status: fb.status || m.status,
@@ -268,6 +266,7 @@ function renderAdminSchedule() {
       <div class="match-info">
         <div class="match-name">${m.status === 'live' ? '<span class="live-dot"></span>' : ''}${m.sport} ${m.round}</div>
         <div class="match-place" style="font-size:11px;font-weight:700;margin:2px 0;">${isRelay(m) ? m.team1 : `${m.team1} vs ${m.team2}`}</div>
+        ${m.status==='done'&&m.score1!==null&&m.score2!==null?`<div style="font-size:11px;color:#ffcc00;font-weight:900;">🏆 ${m.score1>m.score2?m.team1:m.score2>m.score1?m.team2:'引き分け'}</div>`:''}
         <div class="match-place">📍 ${m.venue}</div>
       </div>
       <div class="match-actions">
@@ -295,17 +294,17 @@ function renderAdminSchedule() {
 }
 
 window.setStatus = async function(id, status) {
-  const current = liveData.schedules[id] || {};
+  const current = liveData.matches[id] || {};
   await set(ref(db, `matches/${id}`), { ...current, status });
   showToast('ステータスを更新しました');
 };
 
 window.saveMatch = async function(id) {
   const m = matchData.find(x => x.id === id);
-  const current = liveData.schedules[id] || {};
-  const isRelay = m && m.team2 === '';
+  const current = liveData.matches[id] || {};
+  const isRel = m && m.team2 === '';
   const updates = { ...current };
-  if (!isRelay) {
+  if (!isRel) {
     const s1 = document.getElementById(`s1-${id}`)?.value;
     const s2 = document.getElementById(`s2-${id}`)?.value;
     const t1 = document.getElementById(`t1-${id}`)?.value;
@@ -315,6 +314,7 @@ window.saveMatch = async function(id) {
     if (t1) updates.team1 = t1;
     if (t2) updates.team2 = t2;
   }
+  updates.status = current.status || m.status;
   await set(ref(db, `matches/${id}`), updates);
   showToast('保存しました');
 };
@@ -393,6 +393,5 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2000);
 }
 
-</script>
 </body>
 </html>
