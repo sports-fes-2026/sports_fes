@@ -147,7 +147,7 @@
 
 <!-- ログイン用（moduleより先に定義する必要あり） -->
 <script>
-const ADMIN_PASSWORD = "2026";
+const ADMIN_PASSWORD = "sports2026";
 window.doLogin = function() {
   const pw = document.getElementById('pw-input').value.trim();
   if (pw === ADMIN_PASSWORD) {
@@ -271,26 +271,197 @@ function renderAdminSchedule() {
       </div>
       <div class="match-actions">
         <div style="display:flex;flex-direction:column;gap:4px;margin-right:6px;">
-          <button class="s-btn upcoming ${m.status==='upcoming'?'active-status':''}" onclick="setStatus(${m.id},'upcoming')">予定</button>
-          <button class="s-btn live ${m.status==='live'?'active-status':''}" onclick="setStatus(${m.id},'live')">LIVE</button>
-          <button class="s-btn done ${m.status==='done'?'active-status':''}" onclick="setStatus(${m.id},'done')">終了</button>
+          <button class="s-btn upcoming ${m.status==='upcoming'?'active-status':''}" onclick="setStatus('${m.id}','upcoming')">予定</button>
+          <button class="s-btn live ${m.status==='live'?'active-status':''}" onclick="setStatus('${m.id}','live')">LIVE</button>
+          <button class="s-btn done ${m.status==='done'?'active-status':''}" onclick="setStatus('${m.id}','done')">終了</button>
         </div>
         <div>
           ${isRelay(m) ? '' : `
-          <input class="score-inp" id="s1-${m.id}" placeholder="${m.team1}" value="${m.score1 !== null ? m.score1 : ''}">
-          <span style="color:var(--muted);font-size:12px;">-</span>
-          <input class="score-inp" id="s2-${m.id}" placeholder="${m.team2}" value="${m.score2 !== null ? m.score2 : ''}">
-          `}
-          <div style="display:flex;gap:4px;margin-top:4px;">
-            ${!isRelay(m) ? `<input class="score-inp" id="t1-${m.id}" placeholder="チーム1名" value="${m.team1}" style="width:70px;">
-            <input class="score-inp" id="t2-${m.id}" placeholder="チーム2名" value="${m.team2}" style="width:70px;">` : ''}
+          <div style="display:flex;align-items:center;gap:4px;margin-bottom:4px;">
+            <input class="score-inp" id="s1-${m.id}" placeholder="点" value="${m.score1 !== null ? m.score1 : ''}" style="width:44px;">
+            <span style="color:var(--muted);font-size:12px;">-</span>
+            <input class="score-inp" id="s2-${m.id}" placeholder="点" value="${m.score2 !== null ? m.score2 : ''}" style="width:44px;">
           </div>
-          <button class="save-btn" style="display:block;margin-top:4px;width:100%;" onclick="saveMatch(${m.id})">保存</button>
+          <div style="display:flex;gap:4px;margin-bottom:4px;">
+            <input class="score-inp" id="t1-${m.id}" placeholder="チーム1" value="${m.team1}" style="width:70px;">
+            <input class="score-inp" id="t2-${m.id}" placeholder="チーム2" value="${m.team2}" style="width:70px;">
+          </div>
+          `}
+          <button class="save-btn" style="display:block;margin-top:2px;width:100%;" onclick="saveMatch('${m.id}')">保存</button>
         </div>
       </div>
     </div>
     </div>
   `).join('');
+}
+
+// ── ブラケット対応表（全競技）──
+const bracketMap = [
+  // ===== バスケ =====
+  {from:'b01', to:'b04', slot:'team2'},
+  {from:'b02', to:'b07', slot:'team1'},
+  {from:'b03', to:'b06', slot:'team2'},
+  {from:'b04', to:'b07', slot:'team2'},
+  {from:'b05', to:'b08', slot:'team2'},
+  {from:'b06', to:'b08', slot:'team1'},
+  {from:'b07', to:'b11', slot:'team1'},
+  {from:'b08', to:'b11', slot:'team2'},
+  {from:'b09', to:'b12', slot:'team1'},
+  {from:'b10', to:'b09', slot:'team2'},
+  {from:'b11', to:'b15', slot:'team1'},
+  {from:'b12', to:'b15', slot:'team2'},
+  {from:'b13', to:'b16', slot:'team1'},
+  {from:'b14', to:'b13', slot:'team2'},
+  {from:'b15', to:'b21', slot:'team1'},
+  {from:'b16', to:'b21', slot:'team2'},
+  {from:'b17', to:'b19', slot:'team2'},
+  {from:'b18', to:'b20', slot:'team2'},
+  {from:'b19', to:'b21', slot:'team1'},
+  {from:'b20', to:'b21', slot:'team2'},
+  // ===== 女子バスケ =====
+  {from:'bw1', to:'bw2', slot:'team2'},
+  {from:'bw2', to:'bw3', slot:'team2'},
+  // ===== サッカー =====
+  {from:'s01', to:'s07', slot:'team1'},
+  {from:'s02', to:'s07', slot:'team2'},
+  {from:'s03', to:'s08', slot:'team1'},
+  {from:'s04', to:'s08', slot:'team2'},
+  {from:'s05', to:'s09', slot:'team1'},
+  {from:'s06', to:'s09', slot:'team2'},
+  {from:'s07', to:'s12', slot:'team1'},
+  {from:'s08', to:'s12', slot:'team2'},
+  {from:'s09', to:'s13', slot:'team1'},
+  {from:'s10', to:'s13', slot:'team2'},
+  {from:'s11', to:'s14', slot:'team2'},
+  {from:'s12', to:'s15', slot:'team1'},
+  {from:'s13', to:'s15', slot:'team2'},
+  {from:'s14', to:'s16', slot:'team1'},
+  {from:'s15', to:'s19', slot:'team1'},
+  {from:'s16', to:'s19', slot:'team2'},
+  {from:'s17', to:'s18', slot:'team2'},
+  {from:'s18', to:'s20', slot:'team1'},
+  {from:'s19', to:'s21', slot:'team1'},
+  {from:'s20', to:'s21', slot:'team2'},
+  // ===== ソフトボール =====
+  {from:'sb01', to:'sb07', slot:'team1'},
+  {from:'sb02', to:'sb07', slot:'team2'},
+  {from:'sb03', to:'sb08', slot:'team1'},
+  {from:'sb04', to:'sb08', slot:'team2'},
+  {from:'sb05', to:'sb09', slot:'team1'},
+  {from:'sb06', to:'sb09', slot:'team2'},
+  {from:'sb07', to:'sb12', slot:'team1'},
+  {from:'sb08', to:'sb12', slot:'team2'},
+  {from:'sb09', to:'sb13', slot:'team1'},
+  {from:'sb10', to:'sb13', slot:'team2'},
+  {from:'sb11', to:'sb14', slot:'team2'},
+  {from:'sb12', to:'sb15', slot:'team1'},
+  {from:'sb13', to:'sb15', slot:'team2'},
+  {from:'sb14', to:'sb16', slot:'team1'},
+  {from:'sb15', to:'sb19', slot:'team1'},
+  {from:'sb16', to:'sb19', slot:'team2'},
+  {from:'sb17', to:'sb20', slot:'team1'},
+  {from:'sb18', to:'sb20', slot:'team2'},
+  {from:'sb19', to:'sb21', slot:'team1'},
+  {from:'sb20', to:'sb21', slot:'team2'},
+  // ===== バレー =====
+  {from:'v01', to:'v07', slot:'team1'},
+  {from:'v02', to:'v07', slot:'team2'},
+  {from:'v03', to:'v08', slot:'team1'},
+  {from:'v04', to:'v08', slot:'team2'},
+  {from:'v05', to:'v09', slot:'team1'},
+  {from:'v06', to:'v09', slot:'team2'},
+  {from:'v07', to:'v12', slot:'team1'},
+  {from:'v08', to:'v12', slot:'team2'},
+  {from:'v09', to:'v13', slot:'team1'},
+  {from:'v10', to:'v13', slot:'team2'},
+  {from:'v11', to:'v14', slot:'team2'},
+  {from:'v12', to:'v15', slot:'team1'},
+  {from:'v13', to:'v15', slot:'team2'},
+  {from:'v14', to:'v16', slot:'team1'},
+  {from:'v15', to:'v19', slot:'team1'},
+  {from:'v16', to:'v19', slot:'team2'},
+  {from:'v17', to:'v18', slot:'team2'},
+  {from:'v18', to:'v20', slot:'team1'},
+  {from:'v19', to:'v21', slot:'team1'},
+  {from:'v20', to:'v21', slot:'team2'},
+  // ===== 女子バレー =====
+  {from:'vw1', to:'vw2', slot:'team2'},
+  {from:'vw2', to:'vw3', slot:'team2'},
+  // ===== バドミントン =====
+  {from:'bd01', to:'bd07', slot:'team1'},
+  {from:'bd02', to:'bd07', slot:'team2'},
+  {from:'bd03', to:'bd08', slot:'team1'},
+  {from:'bd04', to:'bd08', slot:'team2'},
+  {from:'bd05', to:'bd09', slot:'team1'},
+  {from:'bd06', to:'bd09', slot:'team2'},
+  {from:'bd07', to:'bd10', slot:'team1'},
+  {from:'bd08', to:'bd10', slot:'team2'},
+  {from:'bd09', to:'bd13', slot:'team1'},
+  {from:'bd10', to:'bd13', slot:'team2'},
+  {from:'bd11', to:'bd12', slot:'team2'},
+  {from:'bd12', to:'bd14', slot:'team1'},
+  {from:'bd13', to:'bd16', slot:'team1'},
+  {from:'bd14', to:'bd16', slot:'team2'},
+  {from:'bd15', to:'bd17', slot:'team1'},
+  {from:'bd16', to:'bd19', slot:'team1'},
+  {from:'bd17', to:'bd19', slot:'team2'},
+  {from:'bd18', to:'bd20', slot:'team1'},
+  {from:'bd19', to:'bd21', slot:'team1'},
+  {from:'bd20', to:'bd21', slot:'team2'},
+  // ===== 女子バドミントン =====
+  {from:'bdw1', to:'bdw2', slot:'team2'},
+  {from:'bdw2', to:'bdw3', slot:'team2'},
+  // ===== ソフトテニス =====
+  {from:'st01', to:'st07', slot:'team1'},
+  {from:'st02', to:'st07', slot:'team2'},
+  {from:'st03', to:'st08', slot:'team1'},
+  {from:'st04', to:'st08', slot:'team2'},
+  {from:'st05', to:'st09', slot:'team1'},
+  {from:'st06', to:'st09', slot:'team2'},
+  {from:'st07', to:'st10', slot:'team1'},
+  {from:'st08', to:'st10', slot:'team2'},
+  {from:'st09', to:'st13', slot:'team1'},
+  {from:'st10', to:'st13', slot:'team2'},
+  {from:'st11', to:'st12', slot:'team2'},
+  {from:'st12', to:'st14', slot:'team1'},
+  {from:'st13', to:'st16', slot:'team1'},
+  {from:'st14', to:'st16', slot:'team2'},
+  {from:'st15', to:'st17', slot:'team1'},
+  {from:'st16', to:'st19', slot:'team1'},
+  {from:'st17', to:'st19', slot:'team2'},
+  {from:'st18', to:'st20', slot:'team2'},
+  {from:'st19', to:'st21', slot:'team1'},
+  {from:'st20', to:'st21', slot:'team2'},
+  // ===== Eスポーツ =====
+  {from:'e01', to:'e07', slot:'team1'},
+  {from:'e02', to:'e07', slot:'team2'},
+  {from:'e03', to:'e08', slot:'team1'},
+  {from:'e04', to:'e08', slot:'team2'},
+  {from:'e05', to:'e09', slot:'team1'},
+  {from:'e06', to:'e09', slot:'team2'},
+  {from:'e07', to:'e12', slot:'team1'},
+  {from:'e08', to:'e12', slot:'team2'},
+  {from:'e09', to:'e13', slot:'team1'},
+  {from:'e10', to:'e13', slot:'team2'},
+  {from:'e11', to:'e14', slot:'team2'},
+  {from:'e12', to:'e15', slot:'team1'},
+  {from:'e13', to:'e15', slot:'team2'},
+  {from:'e14', to:'e16', slot:'team1'},
+  {from:'e15', to:'e17', slot:'team1'},
+  {from:'e16', to:'e17', slot:'team2'},
+  {from:'e17', to:'e21', slot:'team1'},
+  {from:'e18', to:'e19', slot:'team1'},
+  {from:'e19', to:'e21', slot:'team2'},
+  {from:'e20', to:'e21', slot:'team2'},
+];
+
+async function advanceWinner(matchId, winnerName) {
+  const rules = bracketMap.filter(r => r.from === matchId);
+  for (const rule of rules) {
+    const current = liveData.matches[rule.to] || {};
+    const updates = { ...current, [rule.slot]: winnerName };
+    await set(ref(db, `matches/${rule.to}`), updates);
+  }
 }
 
 window.setStatus = async function(id, status) {
@@ -309,14 +480,26 @@ window.saveMatch = async function(id) {
     const s2 = document.getElementById(`s2-${id}`)?.value;
     const t1 = document.getElementById(`t1-${id}`)?.value;
     const t2 = document.getElementById(`t2-${id}`)?.value;
-    if (s1 !== '') updates.score1 = Number(s1);
-    if (s2 !== '') updates.score2 = Number(s2);
+    if (s1 !== undefined && s1 !== '') updates.score1 = Number(s1);
+    if (s2 !== undefined && s2 !== '') updates.score2 = Number(s2);
     if (t1) updates.team1 = t1;
     if (t2) updates.team2 = t2;
+    updates.status = 'done';
+
+    // 勝者を自動で次試合に入れる
+    const sc1 = updates.score1 !== undefined ? updates.score1 : current.score1;
+    const sc2 = updates.score2 !== undefined ? updates.score2 : current.score2;
+    const tm1 = updates.team1 || m.team1;
+    const tm2 = updates.team2 || m.team2;
+    if (sc1 !== null && sc2 !== null && sc1 !== sc2) {
+      const winner = sc1 > sc2 ? tm1 : tm2;
+      await advanceWinner(id, winner);
+    }
+  } else {
+    updates.status = current.status || m.status;
   }
-  updates.status = current.status || m.status;
   await set(ref(db, `matches/${id}`), updates);
-  showToast('保存しました');
+  showToast('保存しました！勝者を次の試合に反映しました');
 };
 
 // ── TOURNAMENT ──
@@ -392,7 +575,6 @@ function showToast(msg) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2000);
 }
-
 </script>
 </body>
 </html>
