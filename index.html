@@ -988,6 +988,7 @@ function renderTournament(){
   const data=tournamentData[currentSport];
   const board=document.getElementById('tournament-board');
   board.innerHTML='';
+  const fbSport = (window._fbTournaments && window._fbTournaments[currentSport]) || {};
   data.matches.forEach((round,ri)=>{
     const roundDiv=document.createElement('div');
     roundDiv.className='t-round';
@@ -997,19 +998,26 @@ function renderTournament(){
     roundDiv.appendChild(label);
     const matchesDiv=document.createElement('div');
     matchesDiv.className='t-matches';
-    round.forEach(match=>{
+    round.forEach((match,mi)=>{
       const group=document.createElement('div');
       group.className='t-match-group';
+      const fbMatch=(fbSport[ri]&&fbSport[ri][mi])||{};
       match.teams.forEach((team,ti)=>{
         const el=document.createElement('div');
-        const isTbd=team.name==='TBD';
-        const other=match.teams[1-ti];
-        const isWinner=team.score!==null&&other.score!==null&&team.score>other.score;
-        const isLoser=team.score!==null&&other.score!==null&&team.score<other.score;
-        const isMyClassTeam = myClass && team.name === myClass;
+        const fbName = ti===0 ? fbMatch.name0 : fbMatch.name1;
+        const fbScore = ti===0 ? fbMatch.score0 : fbMatch.score1;
+        const displayName = fbName || team.name;
+        const displayScore = fbScore !== undefined ? fbScore : team.score;
+        const isTbd=displayName==='TBD';
+        const otherScore = ti===0
+          ? (fbMatch.score1 !== undefined ? fbMatch.score1 : match.teams[1].score)
+          : (fbMatch.score0 !== undefined ? fbMatch.score0 : match.teams[0].score);
+        const isWinner=displayScore!==null&&otherScore!==null&&displayScore>otherScore;
+        const isLoser=displayScore!==null&&otherScore!==null&&displayScore<otherScore;
+        const isMyClassTeam = myClass && displayName === myClass;
         el.className=`t-team${isTbd?' tbd':''}${isWinner?' winner':''}${isMyClassTeam?' my-class-team':''}`;
-        const scoreHtml=team.score!==null?`<span class="t-score${isLoser?' lose':''}">${team.score}</span>`:'';
-        el.innerHTML=`<span class="t-name">${isTbd?'—':team.name}</span>${scoreHtml}`;
+        const scoreHtml=displayScore!==null?`<span class="t-score${isLoser?' lose':''}">${displayScore}</span>`:'';
+        el.innerHTML=`<span class="t-name">${isTbd?'—':displayName}</span>${scoreHtml}`;
         group.appendChild(el);
       });
       matchesDiv.appendChild(group);
@@ -1058,13 +1066,18 @@ function renderHome(){
     const isRelay=m.team2==='';
     const isWatched=watchlist.includes(m.id);
     const isMyClass=myClass&&(m.team1===myClass||m.team2===myClass);
+    const roundNum=m.round.match(/[①-㉑]/)?.[0]||m.round.replace(/[^①-㉛]/g,'')||m.round;
+    const roundLabel=`${m.sport}${roundNum}`;
     return `<div class="match-card upcoming${isMyClass?' my-class':''}" onclick="toggleWatch('${m.id}')">
       <div class="match-card-header">
-        <span class="match-sport-name">${icon} ${m.sport}</span>
-        <span class="match-round-label">${m.round}</span>
+        <span class="match-sport-name">${icon} ${roundLabel}</span>
+        <span class="match-status-badge"></span>
       </div>
       <div class="match-card-body">
-        ${isRelay?`<div class="relay-teams">${m.team1}</div>`:`<div class="match-teams"><span>${m.team1||'—'}</span><span class="vs">vs</span><span>${m.team2||'—'}</span></div>`}
+        ${isRelay
+          ? `<div class="relay-teams">${m.team1}</div>`
+          : `<div class="match-teams-inline"><span>${m.team1||'—'}</span><span class="vs-inline">vs</span><span>${m.team2||'—'}</span></div>`
+        }
         <div class="match-card-footer">
           <span class="match-venue">${m.time}</span>
           <span class="watch-star ${isWatched?'on':''}">⭐</span>
@@ -1122,19 +1135,7 @@ onValue(ref(db, 'matches'), snap => {
 
 // トーナメントをFirebaseから自動更新
 onValue(ref(db, 'tournaments'), snap => {
-  const fbData = snap.val() || {};
-  Object.keys(fbData).forEach(sport => {
-    if (!tournamentData[sport]) return;
-    Object.keys(fbData[sport]).forEach(ri => {
-      Object.keys(fbData[sport][ri]).forEach(mi => {
-        const m = tournamentData[sport].matches[ri]?.[mi];
-        if (!m) return;
-        const d = fbData[sport][ri][mi];
-        if (d.score0 !== undefined) m.teams[0].score = d.score0;
-        if (d.score1 !== undefined) m.teams[1].score = d.score1;
-      });
-    });
-  });
+  window._fbTournaments = snap.val() || {};
   if (document.getElementById('page-tournament').classList.contains('active')) renderTournament();
 });
 </script>

@@ -530,23 +530,27 @@ function renderAdminTournamentDetail() {
     html += `<div class="sec-title">${data.rounds[ri] || 'Round '+(ri+1)}</div><div class="match-list">`;
     round.forEach((match, mi) => {
       const fbMatch = (fbData[ri] && fbData[ri][mi]) || {};
-      const t0 = fbMatch.score0 ?? match.teams[0].score;
-      const t1 = fbMatch.score1 ?? match.teams[1].score;
-      const n0 = match.teams[0].name;
-      const n1 = match.teams[1].name;
-      const isTbd = n0 === 'TBD' || n1 === 'TBD';
+      const sc0 = fbMatch.score0 !== undefined ? fbMatch.score0 : match.teams[0].score;
+      const sc1 = fbMatch.score1 !== undefined ? fbMatch.score1 : match.teams[1].score;
+      const n0 = fbMatch.name0 || match.teams[0].name;
+      const n1 = fbMatch.name1 || match.teams[1].name;
+      const w0 = sc0 !== null && sc1 !== null && sc0 > sc1;
+      const w1 = sc0 !== null && sc1 !== null && sc1 > sc0;
       html += `
-        <div class="match-card ${isTbd ? 'done' : ''}">
-          <div class="match-info">
-            <div class="match-name" style="font-size:11px;">${n0} vs ${n1}</div>
-          </div>
-          <div class="match-actions">
-            <div class="score-wrap">
-              <input class="score-inp" id="t-${adminSport}-${ri}-${mi}-0" value="${t0 !== null ? t0 : ''}" placeholder="—">
+        <div class="match-card">
+          <div class="match-info" style="flex:1;">
+            <div style="display:flex;gap:4px;margin-bottom:4px;">
+              <input class="score-inp" id="tn-${adminSport}-${ri}-${mi}-0" value="${n0}" placeholder="チーム1" style="width:60px;${w0?'border-color:var(--red);':''}">
+              <span class="score-sep">vs</span>
+              <input class="score-inp" id="tn-${adminSport}-${ri}-${mi}-1" value="${n1}" placeholder="チーム2" style="width:60px;${w1?'border-color:var(--red);':''}">
+            </div>
+            <div style="display:flex;gap:4px;align-items:center;">
+              <input class="score-inp" id="t-${adminSport}-${ri}-${mi}-0" value="${sc0 !== null ? sc0 : ''}" placeholder="点" style="width:44px;">
               <span class="score-sep">-</span>
-              <input class="score-inp" id="t-${adminSport}-${ri}-${mi}-1" value="${t1 !== null ? t1 : ''}" placeholder="—">
+              <input class="score-inp" id="t-${adminSport}-${ri}-${mi}-1" value="${sc1 !== null ? sc1 : ''}" placeholder="点" style="width:44px;">
               <button class="save-btn" onclick="saveTournamentScore('${adminSport}',${ri},${mi})">保存</button>
             </div>
+            ${w0||w1 ? `<div style="font-size:10px;color:#ffcc00;margin-top:4px;">🏆 ${w0?n0:n1}</div>` : ''}
           </div>
         </div>`;
     });
@@ -558,14 +562,18 @@ function renderAdminTournamentDetail() {
 window.saveTournamentScore = async function(sport, ri, mi) {
   const s0 = document.getElementById(`t-${sport}-${ri}-${mi}-0`).value;
   const s1 = document.getElementById(`t-${sport}-${ri}-${mi}-1`).value;
+  const n0 = document.getElementById(`tn-${sport}-${ri}-${mi}-0`).value;
+  const n1 = document.getElementById(`tn-${sport}-${ri}-${mi}-1`).value;
   const current = liveData.tournaments[sport] || {};
   if (!current[ri]) current[ri] = {};
   current[ri][mi] = {
     score0: s0 !== '' ? Number(s0) : null,
-    score1: s1 !== '' ? Number(s1) : null
+    score1: s1 !== '' ? Number(s1) : null,
+    name0: n0 || null,
+    name1: n1 || null,
   };
   await set(ref(db, `tournaments/${sport}`), current);
-  showToast('スコアを保存しました');
+  showToast('保存しました');
 };
 
 // ── TOAST ──
